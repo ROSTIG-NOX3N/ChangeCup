@@ -14,7 +14,7 @@ def display_groups(groups):
             # 각 그룹마다 박스 스타일 적용
             st.markdown(f"""
             <div style="background-color: transparent; padding:20px; border-radius:15px; border: 2px solid {group_colors}; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); margin-bottom:15px; text-align:center;">
-                <div style="font-size:32px; font-weight:bold; margin-bottom:10px; color:{group_colors};">{group}조</div>
+                <div style="font-size:32px; font-weight:bold; margin-bottom:10px;" class="group-name">{group}조</div>
                 <div style="font-size:24px; color:inherit;">
                     {"<br>".join([f"<strong>{i}️⃣</strong> {team}" for i, team in enumerate(teams, start=1)])}
                 </div>
@@ -26,14 +26,20 @@ def display_groups(groups):
     <style>
     /* 다크모드와 라이트모드를 감지하여 자동으로 텍스트 색상 변경 */
     @media (prefers-color-scheme: dark) {
+        .group-name {
+            color: white !important;  /* A조와 같은 제목 색상 다크모드에서 흰색으로 */
+        }
         .dark-mode-text {
-            color: white !important;
+            color: white !important;  /* 팀 이름을 포함한 텍스트 흰색 */
         }
     }
 
     @media (prefers-color-scheme: light) {
-        .light-mode-text {
-            color: black !important;
+        .group-name {
+            color: black !important;  /* A조와 같은 제목 색상 라이트모드에서 검은색으로 */
+        }
+        .dark-mode-text {
+            color: black !important;  /* 팀 이름을 포함한 텍스트 검은색 */
         }
     }
     </style>
