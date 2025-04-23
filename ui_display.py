@@ -19,8 +19,9 @@ def display_groups(groups):
     for idx, (group, teams) in enumerate(groups.items()):
         col_idx = idx % 7  # 7개의 열로 순차적으로 배분
         with cols[col_idx]:
-            st.markdown(f"<div style='background-color:{group_colors[group]}; padding:10px; border-radius:8px;'>", unsafe_allow_html=True)
+            st.markdown(f"<div style='background-color:{group_colors[group]}; padding:15px; border-radius:8px; font-size:20px;'>", unsafe_allow_html=True)
             st.markdown(f"### {group}조")
             for i, team in enumerate(teams, start=1):
-                st.markdown(f"**{i}️⃣** {team}")
+                st.markdown(f"**{i}️⃣** {team}", unsafe_allow_html=True)
+            st.markdown("<hr style='border:1px solid #ccc;'>", unsafe_allow_html=True)  # 구분선 추가
             st.markdown("</div>", unsafe_allow_html=True)
