@@ -17,9 +17,22 @@ groups = {
 # 컬럼 7개 생성
 cols = st.columns(7)
 
-# 각 조별로 열에 표시
+# 각 조별로 열에 표시, 배경색 추가
+group_colors = {
+    "A조": "#FFEBEE",  # 연한 빨강
+    "B조": "#FFEB3B",  # 노랑
+    "C조": "#4CAF50",  # 초록
+    "D조": "#2196F3",  # 파랑
+    "E조": "#9C27B0",  # 보라
+    "F조": "#FF5722",  # 주황
+    "G조": "#607D8B",  # 회색
+}
+
+# 각 조별로 표시
 for idx, (group, teams) in enumerate(groups.items()):
     with cols[idx]:
+        st.markdown(f"<div style='background-color:{group_colors[group]}; padding:10px; border-radius:8px;'>", unsafe_allow_html=True)
         st.markdown(f"### {group}")
         for i, team in enumerate(teams, start=1):
             st.markdown(f"**{i}️⃣** {team}")
+        st.markdown("</div>", unsafe_allow_html=True)
