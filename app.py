@@ -14,7 +14,7 @@ groups = {
 
 # 제목 및 페이지 설정
 st.set_page_config(page_title="아침체인지컵 2025 - 조별 팀 구성", layout="wide")
-st.title("⚽ 아침체인지컵 2025 - 조별 팀 구성")
+st.title("2025 아침체인지컵 조별리그")
 
 # 그룹 표시
 display_groups(groups)
