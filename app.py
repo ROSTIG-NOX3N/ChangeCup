@@ -31,8 +31,8 @@ group_colors = {
 # 각 조별로 표시
 for idx, (group, teams) in enumerate(groups.items()):
     with cols[idx]:
-        st.markdown(f"<div style='background-color:{group_colors[group]}; padding:10px; border-radius:8px;'>", unsafe_allow_html=True)
-        st.markdown(f"### {group}")
+        st.markdown(f"<div style='background-color:{group_colors[group]}; padding:15px; border-radius:8px; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);'>", unsafe_allow_html=True)
+        st.markdown(f"### {group}", unsafe_allow_html=True)
         for i, team in enumerate(teams, start=1):
             st.markdown(f"**{i}️⃣** {team}")
         st.markdown("</div>", unsafe_allow_html=True)
