@@ -19,10 +19,12 @@ def display_groups(groups):
     for idx, (group, teams) in enumerate(groups.items()):
         col_idx = idx % 7  # 7개의 열로 순차적으로 배분
         with cols[col_idx]:
-            # 각 그룹마다 고유 스타일 적용 (인라인 스타일로 폰트 크기 설정)
-            st.markdown(f"<div style='background-color:{group_colors[group]}; padding:15px; border-radius:8px;'>", unsafe_allow_html=True)
-            st.markdown(f"<div style='font-size:28px; font-weight:bold;'>{group}조</div>", unsafe_allow_html=True)  # 조 제목 크기
-            for i, team in enumerate(teams, start=1):
-                st.markdown(f"<div style='font-size:24px;'><strong>{i}️⃣</strong> {team}</div>", unsafe_allow_html=True)  # 팀 목록 크기
-            st.markdown("<hr style='border-top: 1px solid #ccc;'>", unsafe_allow_html=True)  # 구분선 추가
-            st.markdown("</div>", unsafe_allow_html=True)
+            # 각 그룹마다 박스 스타일 적용
+            st.markdown(f"""
+            <div style="background-color:{group_colors[group]}; padding:20px; border-radius:15px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); margin-bottom:15px; text-align:center;">
+                <div style="font-size:32px; font-weight:bold; margin-bottom:10px; color:white;">{group}조</div>
+                <div style="font-size:24px; color:black;">
+                    {"<br>".join([f"<strong>{i}️⃣</strong> {team}" for i, team in enumerate(teams, start=1)])}
+                </div>
+            </div>
+            """, unsafe_allow_html=True)
