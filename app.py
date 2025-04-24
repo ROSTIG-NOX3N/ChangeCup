@@ -8,13 +8,10 @@ class_stats_df = pd.read_csv('Book(Class_Stat).csv')
 
 # 페이지 제목
 st.title("⚽ 2025 아침체인지컵 ")
-# 섹션 선택
-option = st.sidebar.selectbox(
-    'Menu',
-     ("메인 메뉴","경기 결과","득점자","반별 통계"))
+
 
 with st.sidebar:
-    choice = option_menu("Menu", ["페이지1", "페이지2", "페이지3"],
+    choice = option_menu("Menu", ["메인 메뉴","경기 결과","득점자","반별 통계"],
                          icons=['house', 'kanban', 'bi bi-robot'],
                          menu_icon="app-indicator", default_index=0,
                          styles={
