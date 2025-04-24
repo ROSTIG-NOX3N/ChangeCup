@@ -19,20 +19,19 @@ option = st.sidebar.selectbox(
 
 # 메인 메뉴 탭 기능
 if option == "메인 메뉴":
-    #본선 진출 현황
-    st.markdown("### A조 : 미정 ")
-    st.markdown("### B조 : 미정 ")
-    st.markdown("# C조 : 2학년 2반 ")
-    st.markdown("### D조 : 미정 ")
-    st.markdown("### E조 : 미정 ")
-    st.markdown("### F조 : 미정 ")
-    st.markdown("### G조 : 미정 ")
     # 탭 3개: 공지사항, 경기영상, 조별결과
     tab1, tab2, tab3 = st.tabs(["공지사항", "경기영상", "조별결과"])
 
     with tab1:
         st.subheader("공지사항")
-        st.write("여기에 공지사항을 입력하세요.")
+        #본선 진출 현황
+        st.markdown("### A조 : 미정 ")
+        st.markdown("### B조 : 미정 ")
+        st.markdown("# C조 : 2학년 2반 ")
+        st.markdown("### D조 : 미정 ")
+        st.markdown("### E조 : 미정 ")
+        st.markdown("### F조 : 미정 ")
+        st.markdown("### G조 : 미정 ")
 
     with tab2:
         # 경기 번호 4부터 10까지 선택할 수 있는 Selectbox
