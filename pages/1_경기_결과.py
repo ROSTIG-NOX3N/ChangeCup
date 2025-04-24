@@ -1,6 +1,7 @@
 import streamlit as st
-import json
+import pandas as pd
 
+match_data = pd.read_csv("Book(Result).csv")
 st.set_page_config(page_title="경기 결과", layout="wide")
 st.title("🏆 경기 결과 및 득점자")
 
