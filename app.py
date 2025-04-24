@@ -1,7 +1,6 @@
 import streamlit as st
 import pandas as pd
 from video_links import video_links
-import numpy as np
 
 # 데이터 불러오기
 results_df = pd.read_csv('Book(Result).csv')
@@ -75,34 +74,6 @@ if option == "메인 메뉴":
         # 선택된 조별 성적 출력
         st.dataframe(selected_group)
 
-        # 6조 확률 계산 (선생님 팀과 C조 제외)
-        exclude_groups = ['선생님팀', 'C조']  # 선생님팀과 C조를 제외
-        filtered_class_stats_df = class_stats_df[~class_stats_df['조'].isin(exclude_groups)]
-
-        # 승률과 골득실을 기반으로 확률 계산
-        def calculate_probability(row):
-            # 승률 계산: 승/전체 경기수
-            total_games = row['승'] + row['무'] + row['패']
-            win_rate = row['승'] / total_games if total_games > 0 else 0
-
-            # 골득실 계산: 득점 - 실점
-            goal_difference = row['득점'] - row['실점']
-
-            # 승률과 골득실을 결합하여 확률 계산
-            # 기본 확률 = 승률의 50%, 골득실의 50%
-            probability = (win_rate * 0.5) + ((goal_difference / total_games) * 0.5 if total_games > 0 else 0)
-            
-            # 확률을 0~1로 정규화
-            probability = np.clip(probability, 0, 1)
-            return probability
-
-        # 각 팀의 확률을 계산하여 새로운 컬럼에 추가
-        filtered_class_stats_df['확률'] = filtered_class_stats_df.apply(calculate_probability, axis=1)
-
-        # 6조 데이터 확인
-        st.write("6조 팀들의 확률:")
-        st.write(filtered_class_stats_df[['학반', '승', '무', '패', '득점', '실점', '조', '확률']])
-
 # 경기 결과 탭
 elif option == "경기 일정":
     st.subheader("📋 전체 경기 일정")
@@ -113,6 +84,9 @@ elif option == "득점자":
     st.subheader("다득점자")
     sorted_scorers = scorers_df.sort_values(by='득점', ascending=False)
     max_goals = sorted_scorers['득점'].max()
+
+    # 득점자 백분위 계산
+    scorers_df['득점_백분위'] = scorers_df['득점'].rank(pct=True) * 100
 
     for idx, row in sorted_scorers.iterrows():
         # 메달 색상 설정
@@ -125,7 +99,8 @@ elif option == "득점자":
         else:
             medal_color = ''  # 메달 없음
 
-        st.markdown(scorer_card(row['이름'], row['소속'], row['득점'], medal_color), unsafe_allow_html=True)
+        # 득점 백분위 표시
+        st.markdown(scorer_card(row['이름'], row['소속'], row['득점'], medal_color, f"{row['득점_백분위']:.2f}%"), unsafe_allow_html=True)
 
 # 반별 통계 탭
 elif option == "반별 통계":
