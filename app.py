@@ -155,23 +155,44 @@ elif option == "득점자":
 
 # 반별 통계 탭
 elif option == "반별 통계":
-    st.subheader("📊 반별 승/무/패 통계")
-    
-    # 득실 계산: 득점 - 실점
-    class_stats_df['득실'] = class_stats_df['득점'] - class_stats_df['실점']
-    
-    # 승률 계산: 승 / (승 + 무 + 패) 후 백분율로 변환
-    class_stats_df['승률'] = (class_stats_df['승'] / (class_stats_df['승'] + class_stats_df['무'] + class_stats_df['패'])) * 100
+    st.markdown("### 📋 반별 경기 통계")
 
-    # 스타일 함수 정의 (C조 2학년 2반만 초록색, 나머지는 기본 배경)
-    def colorize(row):
-        if row['조'] == 'C' and row['학반'] == '2학년 2반':
-            return ['background-color: green; color: white'] * len(row)
-        else:
-            return [''] * len(row)  # 기본 배경
+    # 학년/반 선택 위젯
+    col1, col2 = st.columns(2)
+    with col1:
+        grade = st.selectbox("학년 선택", [1, 2, 3])
+    with col2:
+        classroom = st.selectbox("반 선택", [1, 2, 3, 4, 5, 6, 7])
 
-    # 스타일 적용
-    styled_df = class_stats_df.style.apply(colorize, axis=1)
+    # 선택된 학반 문자열로 조합
+    selected_class = f"{grade}학년 {classroom}반"
 
-    # 반별 성적 출력
-    st.dataframe(styled_df)
+    # 해당 반의 데이터 필터링
+    class_data = class_stats_df[class_stats_df["학반"] == selected_class]
+
+    if not class_data.empty:
+        st.markdown(f"#### 🔍 {selected_class} 통계")
+        st.dataframe(class_data.reset_index(drop=True))
+
+        # 통계 요약 출력
+        wins = int(class_data['승'])
+        draws = int(class_data['무'])
+        losses = int(class_data['패'])
+        goals = int(class_data['득점'])
+        conceded = int(class_data['실점'])
+        goal_diff = goals - conceded
+        points = wins * 3 + draws
+
+        st.markdown(f"""
+        - ✅ 승리: {wins}승  
+        - 🤝 무승부: {draws}무  
+        - ❌ 패배: {losses}패  
+        - ⚽ 득점: {goals}  
+        - 🛡️ 실점: {conceded}  
+        - 🧮 골득실: {goal_diff}  
+        - 🏅 승점: {points}
+        """)
+    else:
+        st.warning(f"{selected_class}에 대한 데이터가 없습니다.")
+
+
