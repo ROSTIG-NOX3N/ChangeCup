@@ -9,7 +9,6 @@ class_stats_df = pd.read_csv('Book(Class_Stat).csv')
 
 # 페이지 제목
 st.title("⚽ 2025 아침체인지컵 ")
-st.subheader("본선 진출 현황")
 
 def sort_key(class_name):
     grade, ban = class_name.split('학년 ')
@@ -68,6 +67,7 @@ if option == "메인 메뉴":
     tab1, tab2, tab3, tab4 = st.tabs(["공지사항", "경기영상", "조별결과", "전체 결과"])
 
     with tab1:
+        st.subheader("본선 진출 현황")
         st.markdown("""
             <style>
             .group-box {
