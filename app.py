@@ -12,6 +12,12 @@ st.title("⚽ 2025 아침체인지컵 ")
 # 섹션 선택
 section = st.radio("메뉴를 선택하세요", ["경기 결과", "득점자", "반별 통계"])
 
+# CSV 불러오기
+results_df = pd.read_csv("Book(Result).csv")
+
+# 테이블 보기
+st.dataframe(results_df)
+
 if section == "경기 결과":
     st.subheader("📋 전체 경기 결과")
     st.dataframe(results_df)
