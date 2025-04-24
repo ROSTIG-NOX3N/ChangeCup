@@ -57,11 +57,10 @@ def scorer_card(name, team, goals, medal_color):
     """
     return card_html
 
-if option == "경기 결과":
-    st.subheader("📋 전체 경기 결과")
-    st.dataframe(results_df)
+# '메인 메뉴'일 때 최근 경기 및 주변 경기 출력
+if option == "메인 메뉴":
+    st.subheader("📋 최근 경기 및 그 주변 경기 결과")
 
-elif option == "메인 메뉴":
     # 경기 번호 기준으로 정렬 (최신 경기부터 표시)
     results_df['경기'] = pd.to_numeric(results_df['경기'], errors='coerce')  # '경기' 열을 숫자형으로 변환
     results_df = results_df.sort_values(by='경기', ascending=False)
@@ -97,6 +96,12 @@ elif option == "메인 메뉴":
         st.markdown(f"📅 경기일자: {경기일자}")
         st.markdown("---")
 
+# '경기 결과'일 때
+elif option == "경기 결과":
+    st.subheader("📋 전체 경기 결과")
+    st.dataframe(results_df)
+
+# '득점자'일 때
 elif option == "득점자":
     st.subheader("다득점자")
     top_scorers = sorted_scorers[sorted_scorers['득점'] >= 2].head(10)
@@ -114,6 +119,7 @@ elif option == "득점자":
 
         st.markdown(scorer_card(row['이름'], row['소속'], row['득점'], medal_color), unsafe_allow_html=True)
 
+# '반별 통계'일 때
 elif option == "반별 통계":
     st.subheader("📊 반별 승/무/패 통계")
     st.dataframe(class_stats_df)
