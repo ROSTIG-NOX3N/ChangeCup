@@ -5,8 +5,6 @@ import pandas as pd
 results_df = pd.read_csv('Book(Result).csv')
 scorers_df = pd.read_csv('Book(Scorer).csv')
 class_stats_df = pd.read_csv('Book(Class_Stat).csv')
-
-# 유튜브 영상 링크 데이터 불러오기
 video_links_df = pd.read_csv('video_links.csv')
 
 # 페이지 제목
@@ -14,7 +12,8 @@ st.title("⚽ 2025 아침체인지컵 ")
 
 option = st.sidebar.selectbox(
     'Menu',
-     ("메인 메뉴", "경기 결과", "득점자", "반별 통계"))
+    ("메인 메뉴", "경기 결과", "득점자", "반별 통계")
+)
 
 # 득점자 순위를 위한 정렬
 sorted_scorers = scorers_df.sort_values(by='득점', ascending=False)
@@ -64,7 +63,6 @@ if option == "경기 결과":
     st.subheader("📋 전체 경기 결과")
     st.dataframe(results_df)
 
-# 메인 메뉴에서 영상 링크 표시
 elif option == "메인 메뉴":
     st.subheader("⚽ 아침체인지컵 메인 메뉴")
     
@@ -74,11 +72,13 @@ elif option == "메인 메뉴":
     # 경기 번호 4~10에 대한 유튜브 영상 링크 가져오기
     for idx, match in results_df.iterrows():
         경기번호 = match['경기']
+        
+        # 영상 링크 가져오기
         영상링크 = video_links_df.loc[video_links_df['경기번호'] == 경기번호, '영상링크'].values
         
         if 경기번호 <= 3:
             영상상태 = "영상없음"
-        elif len(영상링크) > 0:
+        elif len(영상링크) > 0 and 영상링크[0] != "영상없음":
             영상상태 = f"업로드 완료: [영상 보기]({영상링크[0]})"
         else:
             영상상태 = "업로드 예정"
