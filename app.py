@@ -122,10 +122,54 @@ if option == "메인 메뉴":
         st.markdown("<div class='group-box'><h4>G조 : <span class='pending'>미정</span></h4></div>", unsafe_allow_html=True)
 
     with tab2:
+        st.markdown("""
+            <style>
+            .video-card {
+                border: 1px solid #ccc;
+                border-radius: 12px;
+                padding: 12px 16px;
+                margin-bottom: 10px;
+                background-color: #fafafa;
+                transition: all 0.3s ease;
+            }
+    
+            .video-card:hover {
+                background-color: #f0f0f0;
+            }
+    
+            .video-title {
+                font-size: 16px;
+                font-weight: 600;
+                color: #007acc;
+                text-decoration: none;
+            }
+    
+            @media (prefers-color-scheme: dark) {
+                .video-card {
+                    background-color: #2a2a2a;
+                    border: 1px solid #444;
+                }
+    
+                .video-title {
+                    color: #61dafb;
+                }
+    
+                .video-card:hover {
+                    background-color: #333;
+                }
+            }
+            </style>
+        """, unsafe_allow_html=True)
+    
         st.markdown("### 🎥 경기 영상")
+    
         for title, link in video_links.items():
-            st.markdown(f"- [{title}]({link})")
-
+            st.markdown(f"""
+            <div class="video-card">
+                <a href="{link}" target="_blank" class="video-title">▶ {title}</a>
+            </div>
+            """, unsafe_allow_html=True)
+            
     with tab3:
         st.markdown("### 🏆 조별 결과")
     
