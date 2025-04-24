@@ -11,6 +11,14 @@ class_stats_df = pd.read_csv('Book(Class_Stat).csv')
 st.title("⚽ 2025 아침체인지컵 ")
 st.subheader("본선 진출 현황")
 
+def sort_key(class_name):
+    grade, ban = class_name.split('학년 ')
+    grade = int(grade)
+    ban = int(ban.replace('반', ''))
+    return grade * 10 + ban
+
+class_stats_df["sort_order"] = class_stats_df["학반"].apply(sort_key)
+
 # 사이드 메뉴
 option = st.sidebar.selectbox(
     'Menu',
@@ -70,41 +78,45 @@ if option == "메인 메뉴":
 
     with tab3:
         st.markdown("### 🏆 조별 결과")
-        grouped = class_stats_df.groupby("조")
-
-        for group_name, group_data in grouped:
-            st.markdown(f"#### {group_name}조")
-            sorted_group = group_data.copy()
-            sorted_group["승점"] = sorted_group["승"] * 3 + sorted_group["무"]
-            sorted_group["골득실"] = sorted_group["득점"] - sorted_group["실점"]
-            sorted_group = sorted_group.sort_values(
-                by=["승점", "골득실", "득점", "실점"], ascending=[False, False, False, True]
-            ).reset_index(drop=True)
-            st.dataframe(sorted_group[["학반", "승", "무", "패", "득점", "실점", "승점", "골득실"]])
+    
+        class_stats_df["승점"] = class_stats_df["승"] * 3 + class_stats_df["무"]
+        class_stats_df["골득실"] = class_stats_df["득점"] - class_stats_df["실점"]
+    
+        grouped = class_stats_df.copy()
+    
+        def highlight_qualified(row):
+            if row["학반"] == "2학년 2반":
+                return ['background-color: lightgreen'] * len(row)
+            return [''] * len(row)
+    
+        for group, group_data in grouped.groupby("조"):
+            st.markdown(f"#### 조 {group}")
+            sorted_group = group_data.sort_values(
+                by=["승점", "골득실", "득점", "실점"],
+                ascending=[False, False, False, True]
+            )
+            st.dataframe(
+                sorted_group[["학반", "승", "무", "패", "득점", "실점", "승점", "골득실"]]
+                .style.apply(highlight_qualified, axis=1)
+            )
 
     with tab4:
         st.markdown("### 📊 전체 결과")
     
-        # 승점과 골득실 계산
         class_stats_df_display = class_stats_df.copy()
         class_stats_df_display["승점"] = class_stats_df_display["승"] * 3 + class_stats_df_display["무"]
         class_stats_df_display["골득실"] = class_stats_df_display["득점"] - class_stats_df_display["실점"]
     
-        # 정렬
-        sorted_all = class_stats_df_display.sort_values(
-            by=["승점", "골득실", "득점", "실점"],
-            ascending=[False, False, False, True]
-        ).reset_index(drop=True)
+        sorted_all = class_stats_df_display.sort_values(by="sort_order")
     
-        # 강조 스타일 함수
         def highlight_qualified(row):
             if row["학반"] == "2학년 2반":
                 return ['background-color: green'] * len(row)
-            else:
-                return [''] * len(row)
+            return [''] * len(row)
     
         st.dataframe(
-            sorted_all[["학반", "승", "무", "패", "득점", "실점", "승점", "골득실"]].style.apply(highlight_qualified, axis=1)
+            sorted_all[["학반", "승", "무", "패", "득점", "실점", "승점", "골득실"]]
+            .style.apply(highlight_qualified, axis=1)
         )
 
 # 경기 결과 탭
