@@ -10,7 +10,8 @@ video_links_df = pd.read_csv('video_links.csv')
 # 컬럼 정리 및 타입 변환
 video_links_df.columns = video_links_df.columns.str.strip()
 video_links_df['경기번호'] = video_links_df['경기번호'].astype(int)
-
+# results_df 컬럼 확인
+st.write(results_df.columns)
 # 페이지 제목
 st.title("⚽ 2025 아침체인지컵 ")
 
