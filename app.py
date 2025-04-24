@@ -62,11 +62,6 @@ if option == "경기 결과":
     st.dataframe(results_df)
 
 elif option == "메인 메뉴":
-    st.subheader("⚽ 아침체인지컵 메인 메뉴")
-
-    # 경기 결과를 바로 메인 메뉴에서 추가
-    st.subheader("📋 최근 경기 및 그 주변 경기 결과")
-
     # 경기 번호 기준으로 정렬 (최신 경기부터 표시)
     results_df['경기'] = pd.to_numeric(results_df['경기'], errors='coerce')  # '경기' 열을 숫자형으로 변환
     results_df = results_df.sort_values(by='경기', ascending=False)
