@@ -155,12 +155,12 @@ elif option == "득점자":
 # 반별 통계 탭
 elif option == "반별 통계":
     st.subheader("📊 반별 승/무/패 통계")
-
-    # 승률 계산: 승 / (승 + 무 + 패) 후 백분율로 변환
-    class_stats_df['승률'] = (class_stats_df['승'] / (class_stats_df['승'] + class_stats_df['무'] + class_stats_df['패'])) * 100
-
+    
     # 득실 계산: 득점 - 실점
     class_stats_df['득실'] = class_stats_df['득점'] - class_stats_df['실점']
+    
+    # 승률 계산: 승 / (승 + 무 + 패) 후 백분율로 변환
+    class_stats_df['승률'] = (class_stats_df['승'] / (class_stats_df['승'] + class_stats_df['무'] + class_stats_df['패'])) * 100
 
     # 스타일 함수 정의 (C조 2학년 2반만 초록색, 나머지는 기본 배경)
     def colorize(row):
