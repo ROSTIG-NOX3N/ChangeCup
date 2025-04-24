@@ -71,12 +71,12 @@ elif option == "메인 메뉴":
     
     # 경기 번호 4~10에 대한 유튜브 영상 링크 가져오기
     for idx, match in results_df.iterrows():
-        경기번호 = match['경기']
+        경기 = match['경기']  # 여기에서 '경기번호' 대신 '경기' 사용
         
         # 영상 링크 가져오기
-        영상링크 = video_links_df.loc[video_links_df['경기'] == 경기번호, '영상링크'].values
+        영상링크 = video_links_df.loc[video_links_df['경기'] == 경기, '영상링크'].values  # '경기번호' 대신 '경기'로 수정
         
-        if 경기번호 <= 3:
+        if 경기 <= 3:
             영상상태 = "영상없음"
         elif len(영상링크) > 0 and 영상링크[0] != "영상없음":
             영상상태 = f"업로드 완료: [영상 보기]({영상링크[0]})"
@@ -107,4 +107,5 @@ elif option == "득점자":
 
 elif option == "반별 통계":
     st.subheader("📊 반별 승/무/패 통계")
+    class_stats_df = class_stats_df.sort_values(by='경기', ascending=False)  # 경기 기준으로 정렬
     st.dataframe(class_stats_df)
