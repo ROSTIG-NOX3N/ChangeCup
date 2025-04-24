@@ -109,8 +109,5 @@ elif option == "반별 통계":
     # 반별로 성적을 보기 좋게 정렬
     class_stats_df = class_stats_df.sort_values(by='득점', ascending=False)  # 득점 기준으로 정렬
 
-    # 각 반의 성적을 분석하여 추가 컬럼 생성 (승률, 실점 등)
-    class_stats_df['승률'] = class_stats_df['승'] / (class_stats_df['승'] + class_stats_df['무'] + class_stats_df['패'])
-
-    # 반별 통계 출력
-    st.dataframe(styled_df)
+    # 반별 통계 출력 (색상 변경 없이)
+    st.dataframe(class_stats_df)
