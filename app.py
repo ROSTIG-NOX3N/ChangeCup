@@ -66,16 +66,6 @@ if option == "경기 결과":
 elif option == "메인 메뉴":
     st.subheader("⚽ 아침체인지컵 메인 메뉴")
     
-    # 경기 번호 기준으로 정렬 (최신 경기부터 표시)
-    results_df = results_df.sort_values(by='경기', ascending=False)
-    
-    # 경기 번호만 출력
-    for idx, match in results_df.iterrows():
-        경기 = match['경기']  # '경기번호' 대신 '경기' 사용
-        st.markdown(f"### ⚽ 경기 {경기}")
-        st.markdown(f"📅 경기일자: {match['경기일자']}")
-        st.markdown("---")
-
 elif option == "득점자":
     st.subheader("다득점자")
     top_scorers = sorted_scorers[sorted_scorers['득점'] >= 2].head(10)
