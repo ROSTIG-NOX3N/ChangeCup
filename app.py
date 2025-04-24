@@ -70,10 +70,10 @@ elif option == "메인 메뉴":
         options=[f"{경기}경기 영상보기" for 경기 in range(4, 11)]  # 4경기부터 10경기까지 선택 옵션 생성
     )
 
-    # 선택한 경기 번호
-    경기번호 = int(경기선택.split()[0])
+    # 선택한 경기 번호 (문자열에서 숫자만 추출)
+    경기번호 = int(경기선택.split()[0].replace("경기", ""))
 
-    # 선택된 경기 영상 보여주기
+    # 선택된 경기 영상 제목 출력
     st.title(f"{경기번호}경기 영상")
     
     # 영상 링크 찾기
@@ -84,7 +84,7 @@ elif option == "메인 메뉴":
         st.video(영상링크)
     else:
         st.write("이 경기는 영상이 아직 업로드되지 않았습니다.")
-    
+        
 elif option == "득점자":
     st.subheader("다득점자")
     top_scorers = sorted_scorers[sorted_scorers['득점'] >= 2].head(10)
