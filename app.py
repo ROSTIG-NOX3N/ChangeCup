@@ -45,7 +45,7 @@ def scorer_card(name, team, goals, rank_label):
     </div>
     """
     return card_html
-    
+
 if option == "경기 결과":
     st.subheader("📋 전체 경기 결과")
     st.dataframe(results_df)
@@ -53,22 +53,24 @@ if option == "경기 결과":
 elif option == "득점자":
     st.subheader("🥅 득점자 순위")
     prev_goals = None
-    rank = 1  # 시작 rank는 1
-    display_rank = 1  # 순위를 표시하는 변수
+    rank = 1  # 순위는 1부터 시작
+    rank_group = 1  # 동일 득점자들을 묶기 위한 그룹 번호
     
     for idx, row in sorted_scorers.iterrows():
         goals = row['득점']
         
         if goals != prev_goals:
-            rank_label = f"{rank}위"  # 새로운 득점이 나오면 현재 rank로 표시
+            # 득점이 다르면 새로운 순위
+            rank = rank_group
+            rank_label = f"{rank}위"
+            rank_group += 1  # 그룹 번호를 하나씩 증가
         else:
-            rank_label = f"공동 {rank}위"  # 동일 득점자들은 공동으로 표시
+            # 득점이 같으면 공동 순위
+            rank_label = f"공동 {rank}위"
         
         st.markdown(scorer_card(row['이름'], row['소속'], goals, rank_label), unsafe_allow_html=True)
         
-        prev_goals = goals
-        display_rank += 1  # 다음 순위를 위한 변수 증가
-        rank = display_rank  # 순위를 갱신
+        prev_goals = goals  # 이전 득점자와 비교를 위해 설정
 
 elif option == "반별 통계":
     st.subheader("📊 반별 승/무/패 통계")
