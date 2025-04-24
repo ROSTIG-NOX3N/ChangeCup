@@ -8,7 +8,7 @@ class_stats_df = pd.read_csv('Book(Class_Stat).csv')
 
 # 페이지 제목
 st.title("⚽ 2025 아침체인지컵 ")
-
+st.dataframe(results_df)
 # 섹션 선택
 section = st.radio("메뉴를 선택하세요", ["메인메뉴", "경기 결과", "득점자", "반별 통계"])
 
