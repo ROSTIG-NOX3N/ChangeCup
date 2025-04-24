@@ -66,24 +66,25 @@ if option == "경기 결과":
 elif option == "메인 메뉴":
     st.subheader("⚽ 아침체인지컵 메인 메뉴")
     
-    # 경기 번호 기준으로 정렬 (최신 경기부터 표시)
-    results_df = results_df.sort_values(by='경기', ascending=False)
+    # 영상이 업로드된 경기만 필터링 (영상링크가 "영상없음"이 아닌 경우)
+    uploaded_video_matches = video_links_df[video_links_df['영상링크'] != '영상없음']
     
-    # 경기 번호 4~10에 대한 유튜브 영상 링크 가져오기
-    for idx, match in results_df.iterrows():
-        경기 = match['경기']  # 여기에서 '경기번호' 대신 '경기' 사용
+    # 영상이 업로드된 경기의 경기번호와 영상 링크를 results_df에 매칭
+    uploaded_matches = results_df[results_df['경기'].isin(uploaded_video_matches['경기번호'])]
+    
+    # 경기일자 순으로 정렬
+    uploaded_matches = uploaded_matches.sort_values(by='경기일자', ascending=True)
+    
+    # 영상 상태 표시
+    for idx, match in uploaded_matches.iterrows():
+        경기 = match['경기']  # 경기번호
         
-        # 영상 링크 가져오기
-        영상링크 = video_links_df.loc[video_links_df['경기번호'] == 경기, '영상링크'].values  # '경기번호'로 수정
-        
-        if len(영상링크) > 0 and 영상링크[0] != "영상없음":
-            영상상태 = f"업로드 완료: [영상 보기]({영상링크[0]})"
-        else:
-            영상상태 = "업로드 예정"
+        # 해당 경기의 영상 링크 찾기
+        영상링크 = uploaded_video_matches.loc[uploaded_video_matches['경기번호'] == 경기, '영상링크'].values[0]
         
         st.markdown(f"### ⚽ 경기 {경기}")
         st.markdown(f"📅 경기일자: {match['경기일자']}")
-        st.markdown(f"📝 영상 상태: {영상상태}")
+        st.markdown(f"📝 영상 상태: 업로드 완료: [영상 보기]({영상링크})")
         st.markdown("---")
 
 elif option == "득점자":
