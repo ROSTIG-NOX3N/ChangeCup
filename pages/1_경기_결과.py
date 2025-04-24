@@ -11,7 +11,7 @@ st.dataframe(results_df)
 
 # 한 경기씩 출력
 for idx, match in results_df.iterrows():
-    st.markdown(f"<h4>⚽ {match['경기 번호']}경기: {match['팀1']} vs {match['팀2']}</h4>", unsafe_allow_html=True)
+    st.markdown(f"<h4>⚽ {match['경기']}경기: {match['팀1']} vs {match['팀2']}</h4>", unsafe_allow_html=True)
     st.write(f"🔢 점수: {match['점수']}")
     st.write(f"📌 결과: {match['결과']}")
     st.markdown("---")
