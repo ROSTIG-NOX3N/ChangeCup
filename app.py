@@ -110,21 +110,16 @@ if option == "메인 메뉴":
                 }
             }
             </style>
-    
-            <div class='group-box'><h4>A조 : <span class='pending'>미정</span></h4></div>
-            <div class='group-box'><h4>B조 : <span class='pending'>미정</span></h4></div>
-            <div class='group-box'><h4>C조 : <span class='qualified'>2학년 2반</span></h4></div>
-            <div style="margin-bottom: 15px;">
-                <video controls width="100%">
-                    <source src="https://youtu.be/ZPLiaRIAfhg" type="video/mp4">
-                    Your browser does not support the video tag.
-                </video>
-            </div>
-            <div class='group-box'><h4>D조 : <span class='pending'>미정</span></h4></div>
-            <div class='group-box'><h4>E조 : <span class='pending'>미정</span></h4></div>
-            <div class='group-box'><h4>F조 : <span class='pending'>미정</span></h4></div>
-            <div class='group-box'><h4>G조 : <span class='pending'>미정</span></h4></div>
         """, unsafe_allow_html=True)
+    
+        st.markdown("<div class='group-box'><h4>A조 : <span class='pending'>미정</span></h4></div>", unsafe_allow_html=True)
+        st.markdown("<div class='group-box'><h4>B조 : <span class='pending'>미정</span></h4></div>", unsafe_allow_html=True)
+        st.markdown("<div class='group-box'><h4>C조 : <span class='qualified'>2학년 2반</span></h4></div>", unsafe_allow_html=True)
+        st.video("https://youtu.be/ZPLiaRIAfhg")
+        st.markdown("<div class='group-box'><h4>D조 : <span class='pending'>미정</span></h4></div>", unsafe_allow_html=True)
+        st.markdown("<div class='group-box'><h4>E조 : <span class='pending'>미정</span></h4></div>", unsafe_allow_html=True)
+        st.markdown("<div class='group-box'><h4>F조 : <span class='pending'>미정</span></h4></div>", unsafe_allow_html=True)
+        st.markdown("<div class='group-box'><h4>G조 : <span class='pending'>미정</span></h4></div>", unsafe_allow_html=True)
 
     with tab2:
         st.markdown("### 🎥 경기 영상")
