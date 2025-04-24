@@ -11,7 +11,9 @@ st.title("⚽ 2025 아침체인지컵 ")
 st.dataframe(results_df)
 # 섹션 선택
 section = st.radio("메뉴를 선택하세요", ["메인메뉴", "경기 결과", "득점자", "반별 통계"])
-
+option = st.sidebar.selectbox(
+    'Menu',
+     ("메인 메뉴","경기 결과","득점자","반별 통계"))
 # CSV 불러오기
 results_df = pd.read_csv("Book(Result).csv")
 
