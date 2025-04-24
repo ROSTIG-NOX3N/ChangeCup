@@ -15,7 +15,7 @@ option = st.sidebar.selectbox(
      ("메인 메뉴","경기 결과","득점자","반별 통계"))
 
 #css 영역
-def scorer_card(name, team, goals, rank):
+def scorer_card(name, team, goals, rank_label):
     card_html = f"""
     <style>
     .scorer-card {{
@@ -38,7 +38,7 @@ def scorer_card(name, team, goals, rank):
     </style>
 
     <div class="scorer-card">
-        <h4 style="margin: 0;">🏅 {rank}위 - {name} ({team})</h4>
+        <h4 style="margin: 0;">🏅 {rank_label} - {name} ({team})</h4>
         <p style="margin: 0;">⚽ 득점 수: <strong>{goals}</strong></p>
     </div>
     """
@@ -50,10 +50,25 @@ if option == "경기 결과":
 
 elif option == "득점자":
     st.subheader("🥅 득점자 순위")
-    sorted_scorers = scorers_df.sort_values(by="득점", ascending=False).reset_index(drop=True)
-
+    prev_goals = None
+    rank = 0
+    display_rank = 0
+    
     for idx, row in sorted_scorers.iterrows():
-        st.markdown(scorer_card(row['이름'], row['소속'], row['득점'], idx+1), unsafe_allow_html=True)
+        goals = row['득점']
+        
+        if goals != prev_goals:
+            rank = display_rank + 1
+            rank_label = f"{rank}위"
+        else:
+            rank_label = f"공동 {rank}위"
+        
+        st.markdown(scorer_card(row['이름'], row['소속'], goals, rank_label), unsafe_allow_html=True)
+        
+        prev_goals = goals
+        display_rank += 1
+
+
 
 elif option == "반별 통계":
     st.subheader("📊 반별 승/무/패 통계")
