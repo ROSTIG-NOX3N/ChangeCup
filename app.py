@@ -74,7 +74,7 @@ elif option == "메인 메뉴":
         경기번호 = match['경기']
         
         # 영상 링크 가져오기
-        영상링크 = video_links_df.loc[video_links_df['경기번호'] == 경기번호, '영상링크'].values
+        영상링크 = video_links_df.loc[video_links_df['경기'] == 경기번호, '영상링크'].values
         
         if 경기번호 <= 3:
             영상상태 = "영상없음"
@@ -83,7 +83,7 @@ elif option == "메인 메뉴":
         else:
             영상상태 = "업로드 예정"
         
-        st.markdown(f"### ⚽ 경기 {경기번호}")
+        st.markdown(f"### ⚽ 경기 {경기}")
         st.markdown(f"📅 경기일자: {match['경기일자']}")
         st.markdown(f"📝 영상 상태: {영상상태}")
         st.markdown("---")
