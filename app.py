@@ -111,9 +111,6 @@ elif option == "반별 통계":
 
     # 각 반의 성적을 분석하여 추가 컬럼 생성 (승률, 실점 등)
     class_stats_df['승률'] = class_stats_df['승'] / (class_stats_df['승'] + class_stats_df['무'] + class_stats_df['패'])
-    
-    # 데이터프레임을 스타일링하여 승률 기준으로 색상 추가
-    styled_df = class_stats_df.style.apply(highlight_best_worst, axis=1)
 
     # 반별 통계 출력
     st.dataframe(styled_df)
