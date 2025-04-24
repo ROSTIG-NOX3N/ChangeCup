@@ -67,7 +67,7 @@ elif option == "메인 메뉴":
     # 경기 번호 4부터 10까지 선택할 수 있는 Selectbox
     경기선택 = st.selectbox(
         "경기를 선택하세요",
-        options=[f"{경기} 경기영상 보기" for 경기 in range(4, 11)]  # 4경기부터 10경기까지 선택 옵션 생성
+        options=[f"{경기}경기 영상보기" for 경기 in range(4, 11)]  # 4경기부터 10경기까지 선택 옵션 생성
     )
 
     # 선택한 경기 번호
