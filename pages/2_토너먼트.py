@@ -3,8 +3,6 @@ import pandas as pd
 # CSV 파일 읽기
 df = pd.read_csv('Book(Class_Stat).csv')
 
-# 컬럼명에 공백이 있는지 확인 후 제거
-df.columns = df.columns.str.strip()
-
-# 컬럼명 확인
-print(df.columns)
+# 데이터프레임의 컬럼명과 일부 내용 출력
+st.write(df.columns)
+st.write(df.head())  # 데이터의 처음 몇 줄을 출력하여 확인
