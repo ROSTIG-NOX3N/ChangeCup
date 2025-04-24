@@ -32,22 +32,13 @@ if option == "메인 메뉴":
 
     # 경기영상 탭
     elif tab_option == "경기영상":
-        # 경기 번호 4부터 10까지 선택할 수 있는 Selectbox
         경기선택 = st.selectbox(
             "경기를 선택하세요",
-            options=[f"{경기}경기 영상보기" for 경기 in range(4, 11)]  # 4경기부터 10경기까지 선택 옵션 생성
+            options=[f"{경기}경기 영상보기" for 경기 in range(4, 11)]
         )
-
-        # 선택한 경기 번호 (문자열에서 숫자만 추출)
         경기번호 = int(경기선택.split()[0].replace("경기", ""))
-
-        # 선택된 경기 영상 제목 출력
         st.title(f"{경기번호}경기 영상")
-        
-        # 영상 링크 찾기
         영상링크 = video_links.get(경기번호, "영상없음")
-        
-        # 영상이 존재하면 표시
         if 영상링크 != "영상없음":
             st.video(영상링크)
         else:
@@ -56,52 +47,26 @@ if option == "메인 메뉴":
     # 조별결과 탭
     elif tab_option == "조별결과":
         st.subheader("📊 조별 승/무/패 통계")
-    
-        # 조 선택을 위한 selectbox (오름차순으로 정렬)
-        조선택 = st.selectbox(
-            "조를 선택하세요",
-            options=sorted(class_stats_df['조'].unique())  # 조 이름을 오름차순으로 정렬
-        )
-    
-        # 선택된 조의 데이터 필터링
-        selected_group = class_stats_df[class_stats_df['조'] == 조선택]
-    
-        # 승률 계산: 승 / (승 + 무 + 패) 후 백분율로 변환
-        selected_group['승률'] = (selected_group['승'] / (selected_group['승'] + selected_group['무'] + selected_group['패'])) * 100
-    
-        # 득실 계산: 득점 - 실점
-        selected_group['득실'] = selected_group['득점'] - selected_group['실점']
-    
-        # 선택된 조별 성적 출력
-        st.dataframe(selected_group)
 
-        # 6조 확률 계산 (선생님 팀과 C조 제외)
-        exclude_groups = ['선생님팀', 'C조']  # 선생님팀과 C조를 제외
-        filtered_class_stats_df = class_stats_df[~class_stats_df['조'].isin(exclude_groups)]
+        # 진출확정 팀 제외
+        제외팀 = ["C조", "선생님팀"]
 
-        # 승률과 골득실을 기반으로 확률 계산
-        def calculate_probability(row):
-            # 승률 계산: 승/전체 경기수
-            total_games = row['승'] + row['무'] + row['패']
-            win_rate = row['승'] / total_games if total_games > 0 else 0
+        # 승률 계산
+        class_stats_df['경기수'] = class_stats_df['승'] + class_stats_df['무'] + class_stats_df['패']
+        class_stats_df['승률'] = class_stats_df['승'] / class_stats_df['경기수']
 
-            # 골득실 계산: 득점 - 실점
-            goal_difference = row['득점'] - row['실점']
+        # 득실차 계산
+        class_stats_df['득실차'] = class_stats_df['득점'] - class_stats_df['실점']
 
-            # 승률과 골득실을 결합하여 확률 계산
-            # 기본 확률 = 승률의 50%, 골득실의 50%
-            probability = (win_rate * 0.5) + ((goal_difference / total_games) * 0.5 if total_games > 0 else 0)
-            
-            # 확률을 0~1로 정규화
-            probability = np.clip(probability, 0, 1)
-            return probability
+        # 확률 점수 계산 (승률 70%, 득실차 30%)
+        후보팀 = class_stats_df[~class_stats_df['조'].isin(제외팀)].copy()
+        후보팀['점수'] = 후보팀['승률'] * 0.7 + (후보팀['득실차'] - 후보팀['득실차'].min()) / (후보팀['득실차'].max() - 후보팀['득실차'].min()) * 0.3
 
-        # 각 팀의 확률을 계산하여 새로운 컬럼에 추가
-        filtered_class_stats_df['확률'] = filtered_class_stats_df.apply(calculate_probability, axis=1)
+        # 확률 백분율로 변환
+        후보팀['진출확률(%)'] = (후보팀['점수'] / 후보팀['점수'].sum()) * 100
 
-        # 6조 데이터 확인
-        st.write("6조 팀들의 확률:")
-        st.write(filtered_class_stats_df[['학반', '승', '무', '패', '득점', '실점', '조', '확률']])
+        st.markdown("### 🔮 8강 진출 확률 (C조, 선생님팀 제외)")
+        st.dataframe(후보팀[['조', '진출확률(%)']].sort_values(by='진출확률(%)', ascending=False).round(1).reset_index(drop=True))
 
 # 경기 결과 탭
 elif option == "경기 일정":
