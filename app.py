@@ -55,22 +55,22 @@ if option == "메인 메뉴":
     # 조별결과 탭
     elif tab_option == "조별결과":
         st.subheader("📊 조별 승/무/패 통계")
-
-        # 조 선택을 위한 selectbox
+    
+        # 조 선택을 위한 selectbox (오름차순으로 정렬)
         조선택 = st.selectbox(
             "조를 선택하세요",
-            options=class_stats_df['조'].unique()  # class_stats_df에서 조 이름만 추출하여 선택지로 사용
+            options=sorted(class_stats_df['조'].unique())  # 조 이름을 오름차순으로 정렬
         )
-
+    
         # 선택된 조의 데이터 필터링
         selected_group = class_stats_df[class_stats_df['조'] == 조선택]
-
+    
         # 승률 계산: 승 / (승 + 무 + 패) 후 백분율로 변환
         selected_group['승률'] = (selected_group['승'] / (selected_group['승'] + selected_group['무'] + selected_group['패'])) * 100
-
+    
         # 득실 계산: 득점 - 실점
         selected_group['득실'] = selected_group['득점'] - selected_group['실점']
-
+    
         # 선택된 조별 성적 출력
         st.dataframe(selected_group)
 
