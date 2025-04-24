@@ -148,8 +148,33 @@ elif option == "반별 통계":
     # 득실 계산: 득점 - 실점
     class_stats_df['득실'] = class_stats_df['득점'] - class_stats_df['실점']
 
-    # 반별로 성적을 보기 좋게 정렬
-    class_stats_df = class_stats_df.sort_values(by='득점', ascending=False)  # 득점 기준으로 정렬
+    # 승률과 득실을 기반으로 확률 계산 함수
+    def calculate_probability(row):
+        total_games = row['승'] + row['무'] + row['패']
+        if total_games > 0:
+            win_rate = row['승'] / total_games
+            goal_difference = row['득점'] - row['실점']
+            probability = (win_rate * 0.5) + (goal_difference / total_games * 0.5)
+        else:
+            probability = 0
+        return probability * 100  # 백분율로 변환
 
-    # 반별 통계 출력 (색상 변경 없이)
-    st.dataframe(class_stats_df)
+    # 확률을 계산하여 새로운 컬럼에 추가
+    class_stats_df['확률'] = class_stats_df.apply(calculate_probability, axis=1)
+
+    # 조 선택을 위한 selectbox (오름차순으로 정렬)
+    조선택 = st.selectbox(
+        "조를 선택하세요",
+        options=sorted(class_stats_df['조'].unique())  # 조 이름을 오름차순으로 정렬
+    )
+
+    # 선택된 조의 데이터 필터링
+    selected_group = class_stats_df[class_stats_df['조'] == 조선택]
+
+    # 선택된 조별 성적 출력
+    st.write(f"**{조선택} 조의 팀들:**")
+    st.dataframe(selected_group[['학반', '승', '무', '패', '득점', '실점', '승률', '확률']])
+
+    # 각 조에서 본선 진출 가능성이 높은 팀 찾기
+    best_team = selected_group.loc[selected_group['확률'].idxmax()]
+    st.write(f"{조선택}에서 본선 진출 가능성이 높은 팀은: {best_team['학반']} (확률: {best_team['확률']:.2f}%)")
