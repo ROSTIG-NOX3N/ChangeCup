@@ -23,8 +23,6 @@ if option == "메인 메뉴":
     tab1, tab2, tab3 = st.tabs(["공지사항", "경기영상", "조별결과"])
 
     with tab1:
-        st.subheader("공지사항")
-        #본선 진출 현황
         st.markdown("### A조 : 미정 ")
         st.markdown("### B조 : 미정 ")
         st.markdown("# C조 : 2학년 2반 ")
