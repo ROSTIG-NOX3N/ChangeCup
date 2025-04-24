@@ -73,7 +73,7 @@ if option == "메인 메뉴":
         grouped = class_stats_df.groupby("조")
 
         for group_name, group_data in grouped:
-            st.markdown(f"#### 🔠 {group_name}조")
+            st.markdown(f"#### {group_name}조")
             sorted_group = group_data.copy()
             sorted_group["승점"] = sorted_group["승"] * 3 + sorted_group["무"]
             sorted_group["골득실"] = sorted_group["득점"] - sorted_group["실점"]
