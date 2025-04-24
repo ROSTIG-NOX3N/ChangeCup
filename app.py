@@ -11,15 +11,6 @@ class_stats_df = pd.read_csv('Book(Class_Stat).csv')
 st.title("⚽ 2025 아침체인지컵 ")
 st.subheader("본선 진출 현황")
 
-#본선 진출 현황
-st.markdown("### A조 : 미정 ")
-st.markdown("### B조 : 미정 ")
-st.markdown("# C조 : 2학년 2반 ")
-st.markdown("### D조 : 미정 ")
-st.markdown("### E조 : 미정 ")
-st.markdown("### F조 : 미정 ")
-st.markdown("### G조 : 미정 ")
-
 # 사이드 메뉴
 option = st.sidebar.selectbox(
     'Menu',
@@ -28,6 +19,14 @@ option = st.sidebar.selectbox(
 
 # 메인 메뉴 탭 기능
 if option == "메인 메뉴":
+    #본선 진출 현황
+    st.markdown("### A조 : 미정 ")
+    st.markdown("### B조 : 미정 ")
+    st.markdown("# C조 : 2학년 2반 ")
+    st.markdown("### D조 : 미정 ")
+    st.markdown("### E조 : 미정 ")
+    st.markdown("### F조 : 미정 ")
+    st.markdown("### G조 : 미정 ")
     # 탭 3개: 공지사항, 경기영상, 조별결과
     tab1, tab2, tab3 = st.tabs(["공지사항", "경기영상", "조별결과"])
 
