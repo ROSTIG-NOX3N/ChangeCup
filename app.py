@@ -15,7 +15,7 @@ option = st.sidebar.selectbox(
     'Menu',
     ("메인 메뉴", "경기 일정", "득점자", "반별 통계")
 )
-st.write(class_stats_df.columns)
+
 # 메인 메뉴 탭 기능
 if option == "메인 메뉴":
     # 탭 3개: 공지사항, 경기영상, 조별결과
@@ -71,16 +71,16 @@ if option == "메인 메뉴":
         # 득실 계산: 득점 - 실점
         selected_group['득실'] = selected_group['득점'] - selected_group['실점']
 
-        # 스타일 함수 정의 (C조 2학년 2반을 초록색, 나머지는 빨간색)
-        def colorize(val, row):
-            # C조 2학년 2반만 초록색으로, 나머지는 빨간색
+        # 스타일 함수 정의 (C조 2학년 2반만 초록색, 나머지는 기본 배경)
+        def colorize(row):
+            # 'C조'의 '2학년 2반'만 초록색 배경
             if row['조'] == 'C' and row['반'] == '2학년 2반':
-                return 'background-color: green; color: white'
+                return ['background-color: green; color: white'] * len(row)
             else:
-                return 'background-color: red; color: white'
+                return [''] * len(row)  # 기본 배경
 
         # 스타일 적용
-        styled_df = selected_group.style.applymap(lambda val: colorize(val, selected_group), subset=['조', '반'])
+        styled_df = selected_group.style.apply(colorize, axis=1)
 
         # 선택된 조별 성적 출력
         st.dataframe(styled_df)
@@ -119,15 +119,15 @@ elif option == "반별 통계":
     # 득실 계산: 득점 - 실점
     class_stats_df['득실'] = class_stats_df['득점'] - class_stats_df['실점']
 
-    # 스타일 함수 정의 (C조 2학년 2반만 초록색, 나머지는 빨간색)
-    def colorize(val, row):
+    # 스타일 함수 정의 (C조 2학년 2반만 초록색, 나머지는 기본 배경)
+    def colorize(row):
         if row['조'] == 'C' and row['반'] == '2학년 2반':
-            return 'background-color: green; color: white'
+            return ['background-color: green; color: white'] * len(row)
         else:
-            return 'background-color: red; color: white'
+            return [''] * len(row)  # 기본 배경
 
     # 스타일 적용
-    styled_df = class_stats_df.style.applymap(lambda val: colorize(val, class_stats_df), subset=['조', '반'])
+    styled_df = class_stats_df.style.apply(colorize, axis=1)
 
     # 반별 성적 출력
     st.dataframe(styled_df)
