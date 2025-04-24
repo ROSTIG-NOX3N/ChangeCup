@@ -10,17 +10,9 @@ class_stats_df = pd.read_csv('Book(Class_Stat).csv')
 st.title("⚽ 2025 아침체인지컵 ")
 
 
-with st.sidebar:
-    choice = option_menu("Menu", ["메인 메뉴","경기 결과","득점자","반별 통계"],
-                         icons=['house', 'kanban', 'bi bi-robot'],
-                         menu_icon="app-indicator", default_index=0,
-                         styles={
-        "container": {"padding": "4!important", "background-color": "#fafafa"},
-        "icon": {"color": "black", "font-size": "25px"},
-        "nav-link": {"font-size": "16px", "text-align": "left", "margin":"0px", "--hover-color": "#fafafa"},
-        "nav-link-selected": {"background-color": "#08c7b4"},
-    }
-    )
+option = st.sidebar.selectbox(
+    'Menu',
+     ("메인 메뉴","경기 결과","득점자","반별 통계"))
 
 
 if option == "경기 결과":
