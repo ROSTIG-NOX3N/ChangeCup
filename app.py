@@ -24,7 +24,7 @@ if section == "경기 결과":
 
 elif section == "득점자":
     st.subheader("🥅 득점자 순위")
-    sorted_scorers = scorers_df.sort_values(by="골 수", ascending=False)
+    sorted_scorers = scorers_df.sort_values(by="득점", ascending=False)
     st.dataframe(sorted_scorers)
 
 elif section == "반별 통계":
