@@ -11,7 +11,7 @@ st.title("⚽ 2025 아침체인지컵 ")
 
 option = st.sidebar.selectbox(
     'Menu',
-     ("메인 메뉴", "경기 결과", "득점자", "반별 통계"))
+    ("메인 메뉴", "경기 결과", "득점자", "반별 통계"))
 
 # 득점자 순위를 위한 정렬
 sorted_scorers = scorers_df.sort_values(by='득점', ascending=False)
@@ -62,7 +62,16 @@ if option == "메인 메뉴":
     st.subheader("📋 최근 경기 및 그 주변 경기 결과")
 
     # 경기 번호 기준으로 정렬 (최신 경기부터 표시)
-    results_df['경기'] = pd.to_numeric(results_df['경기'], errors='coerce')  # '경기' 열을 숫자형으로 변환
+    try:
+        # '경기' 열을 숫자형으로 변환하여 처리
+        results_df['경기'] = pd.to_numeric(results_df['경기'], errors='coerce')
+    except Exception as e:
+        st.error(f"데이터 변환 중 오류가 발생했습니다: {e}")
+
+    # '경기' 열에 NaN 값이 있을 경우 처리
+    results_df = results_df.dropna(subset=['경기'])
+
+    # 경기 번호 기준으로 정렬
     results_df = results_df.sort_values(by='경기', ascending=False)
 
     # 가장 최근 경기 번호 찾기
