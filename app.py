@@ -17,6 +17,44 @@ option = st.sidebar.selectbox(
     ("메인 메뉴", "경기 일정", "득점자", "반별 통계")
 )
 
+# CSS 영역
+def scorer_card(name, team, goals, medal_color):
+    medal_html = ""
+    if medal_color == 'gold':
+        medal_html = "<span style='color: gold;'>🥇</span>"
+    elif medal_color == 'silver':
+        medal_html = "<span style='color: silver;'>🥈</span>"
+    elif medal_color == 'bronze':
+        medal_html = "<span style='color: #cd7f32;'>🥉</span>"
+
+    card_html = f"""
+    <style>
+    .scorer-card {{
+        border: 1px solid #ddd;
+        border-radius: 10px;
+        padding: 12px;
+        margin-bottom: 10px;
+        background-color: #f5f5f5;
+        color: #000;
+        transition: all 0.3s ease;
+    }}
+
+    @media (prefers-color-scheme: dark) {{
+        .scorer-card {{
+            background-color: #222;
+            color: #fff;
+            border: 1px solid #555;
+        }}
+    }}
+    </style>
+
+    <div class="scorer-card">
+        <h4 style="margin: 0;">{medal_html} {name} ({team})</h4>
+        <p style="margin: 0;">⚽ 득점 수: <strong>{goals}골</strong></p>
+    </div>
+    """
+    return card_html
+
 # 메인 메뉴 탭 기능
 if option == "메인 메뉴":
     # 탭 3개: 공지사항, 경기영상, 조별결과
