@@ -57,18 +57,27 @@ if option == "메인 메뉴":
     elif tab_option == "조별결과":
         st.subheader("📊 조별 승/무/패 통계")
     
-        # 조 선택을 위한 selectbox
-        조목록 = sorted(results_df['조'].unique())
-        선택조 = st.selectbox("조를 선택하세요", 조목록)
+        # 조 선택을 위한 selectbox (오름차순으로 정렬)
+        조선택 = st.selectbox(
+            "조를 선택하세요",
+            options=sorted(class_stats_df['조'].unique())  # 조 이름을 오름차순으로 정렬
+        )
+    
+        # 선택된 조의 데이터 필터링
+        selected_group = class_stats_df[class_stats_df['조'] == 조선택]
+    
+        # 승률 계산: 승 / (승 + 무 + 패) 후 백분율로 변환
+        selected_group['승률'] = (selected_group['승'] / (selected_group['승'] + selected_group['무'] + selected_group['패'])) * 100
+    
+        # 득실 계산: 득점 - 실점
+        selected_group['득실'] = selected_group['득점'] - selected_group['실점']
+    
+        # 선택된 조별 성적 출력
+        st.dataframe(selected_group)
 
-        # 선택한 조의 데이터 필터링
-        선택조_데이터 = results_df[results_df['조'] == 선택조]
-
-        # 데이터프레임 표시
-        st.dataframe(선택조_데이터[['팀', '승', '무', '패', '승점', '득실차']].sort_values(by='승점', ascending=False).reset_index(drop=True))
-
-        # 간단한 시각화 (득점 순)
-        st.bar_chart(선택조_데이터.set_index('팀')['승점'])
+        # 6조 확률 계산 (선생님 팀과 C조 제외)
+        exclude_groups = ['선생님팀', 'C조']  # 선생님팀과 C조를 제외
+        filtered_class_stats_df = class_stats_df[~class_stats_df['조'].isin(exclude_groups)]
 
         # 승률과 골득실을 기반으로 확률 계산
         def calculate_probability(row):
