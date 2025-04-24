@@ -9,6 +9,9 @@ except FileNotFoundError as e:
 except Exception as e:
     st.error(f"파일 로드 중 오류가 발생했습니다: {e}")
 
+# 데이터프레임 컬럼 확인
+st.write("데이터프레임 컬럼:", results_df.columns)
+
 # 페이지 제목
 st.title("⚽ 2025 아침체인지컵 ")
 
@@ -33,6 +36,9 @@ if option == "메인 메뉴":
     if results_df.empty:
         st.error("경기 결과 데이터가 없습니다.")
     else:
+        # 컬럼명을 확인하여 필요한 컬럼을 추출
+        st.write("현재 사용 중인 컬럼:", results_df.columns)
+
         # 예정된 경기: 득점이 NaN인 경기 (예: 팀1득점 또는 팀2득점)
         scheduled_matches = results_df[results_df['팀1득점'].isna() | results_df['팀2득점'].isna()]
         scheduled_matches = scheduled_matches.sort_values(by='경기', ascending=True)
@@ -69,21 +75,3 @@ if option == "메인 메뉴":
                 st.markdown("---")
         else:
             st.markdown("치러진 경기가 없습니다.")
-
-# '경기 결과'일 때
-elif option == "경기 결과":
-    st.subheader("📋 전체 경기 결과")
-    st.dataframe(results_df)
-
-# '득점자'일 때
-elif option == "득점자":
-    st.subheader("다득점자")
-    sorted_scorers = results_df[['이름', '득점']].sort_values(by='득점', ascending=False)
-    for idx, row in sorted_scorers.iterrows():
-        st.markdown(f"{row['이름']} - {row['득점']}골")
-
-# '반별 통계'일 때
-elif option == "반별 통계":
-    st.subheader("📊 반별 승/무/패 통계")
-    # 반별 통계 데이터 표시
-    st.dataframe(results_df)
