@@ -2,9 +2,14 @@ import streamlit as st
 import pandas as pd
 
 # 데이터 불러오기
-results_df = pd.read_csv('Book(Result).csv')
-scorers_df = pd.read_csv('Book(Scorer).csv')
-class_stats_df = pd.read_csv('Book(Class_Stat).csv')
+try:
+    results_df = pd.read_csv('Book(Result).csv')
+    scorers_df = pd.read_csv('Book(Scorer).csv')
+    class_stats_df = pd.read_csv('Book(Class_Stat).csv')
+except FileNotFoundError as e:
+    st.error(f"파일을 찾을 수 없습니다: {e}")
+except Exception as e:
+    st.error(f"파일 로드 중 오류가 발생했습니다: {e}")
 
 # 페이지 제목
 st.title("⚽ 2025 아침체인지컵 ")
@@ -70,6 +75,9 @@ if option == "메인 메뉴":
 
     # '경기' 열에 NaN 값이 있을 경우 처리
     results_df = results_df.dropna(subset=['경기'])
+
+    # 데이터 확인: 로드된 결과 출력 (디버깅)
+    st.write("로드된 경기 결과 데이터:", results_df.head())
 
     # 결과가 비어있을 경우 처리
     if results_df.empty:
