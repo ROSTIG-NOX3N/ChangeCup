@@ -9,6 +9,16 @@ class_stats_df = pd.read_csv('Book(Class_Stat).csv')
 
 # 페이지 제목
 st.title("⚽ 2025 아침체인지컵 ")
+st.subheader("본선 진출 현황")
+
+#본선 진출 현황
+st.markdown("### A조 : 미정 ")
+st.markdown("### B조 : 미정 ")
+st.markdown("# C조 : 2학년 2반 ")
+st.markdown("### D조 : 미정 ")
+st.markdown("### E조 : 미정 ")
+st.markdown("### F조 : 미정 ")
+st.markdown("### G조 : 미정 ")
 
 # 사이드 메뉴
 option = st.sidebar.selectbox(
