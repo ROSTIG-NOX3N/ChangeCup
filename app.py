@@ -166,7 +166,7 @@ if option == "메인 메뉴":
         for title, link in video_links.items():
             st.markdown(f"""
             <div class="video-card">
-                <a href="{link}" target="_blank" class="video-title">▶ {title}</a>
+                <a href="{link}" target="_blank" class="video-title">▶ {title}경기 영상</a>
             </div>
             """, unsafe_allow_html=True)
             
