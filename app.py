@@ -7,11 +7,6 @@ scorers_df = pd.read_csv('Book(Scorer).csv')
 class_stats_df = pd.read_csv('Book(Class_Stat).csv')
 video_links_df = pd.read_csv('video_links.csv')
 
-# 컬럼 정리 및 타입 변환
-video_links_df.columns = video_links_df.columns.str.strip()
-video_links_df['경기번호'] = video_links_df['경기번호'].astype(int)
-# results_df 컬럼 확인
-st.write(results_df.columns)
 # 페이지 제목
 st.title("⚽ 2025 아침체인지컵 ")
 
@@ -22,9 +17,11 @@ option = st.sidebar.selectbox(
 
 # 득점자 순위를 위한 정렬
 sorted_scorers = scorers_df.sort_values(by='득점', ascending=False)
+
+# 최댓값 득점자 수
 max_goals = sorted_scorers['득점'].max()
 
-# CSS 카드 스타일 함수
+# CSS 영역
 def scorer_card(name, team, goals, medal_color):
     medal_html = ""
     if medal_color == 'gold':
@@ -43,7 +40,9 @@ def scorer_card(name, team, goals, medal_color):
         margin-bottom: 10px;
         background-color: #f5f5f5;
         color: #000;
+        transition: all 0.3s ease;
     }}
+
     @media (prefers-color-scheme: dark) {{
         .scorer-card {{
             background-color: #222;
@@ -52,6 +51,7 @@ def scorer_card(name, team, goals, medal_color):
         }}
     }}
     </style>
+
     <div class="scorer-card">
         <h4 style="margin: 0;">{medal_html} {name} ({team})</h4>
         <p style="margin: 0;">⚽ 득점 수: <strong>{goals}골</strong></p>
@@ -59,47 +59,71 @@ def scorer_card(name, team, goals, medal_color):
     """
     return card_html
 
-# 🏆 메뉴별 기능 분기
 if option == "경기 결과":
     st.subheader("📋 전체 경기 결과")
     st.dataframe(results_df)
 
-    경기 = st.selectbox("🔍 영상 보기: 경기 선택", sorted(results_df['경기번호'].unique()))
+elif option == "메인 메뉴":
+    st.subheader("⚽ 아침체인지컵 메인 메뉴")
     
-    try:
-        경기_int = int(경기)
-        if 경기_int <= 3:
-            st.warning("해당 경기는 영상이 제공되지 않습니다.")
+    # 경기 번호 기준으로 정렬 (최신 경기부터 표시)
+    results_df = results_df.sort_values(by='경기', ascending=False)
+    
+    # 경기 번호 4~10에 대한 유튜브 영상 링크 가져오기
+    for idx, match in results_df.iterrows():
+        경기 = match['경기']  # 여기에서 '경기번호' 대신 '경기' 사용
+        
+        # 영상 링크 가져오기
+        영상링크 = video_links_df.loc[video_links_df['경기번호'] == 경기, '영상링크'].values  # '경기번호'로 수정
+        
+        if 경기 <= 3:
+            영상상태 = "영상없음"
+        elif len(영상링크) > 0 and 영상링크[0] != "영상없음":
+            영상상태 = f"업로드 완료: [영상 보기]({영상링크[0]})"
         else:
-            영상링크 = video_links_df.loc[video_links_df['경기번호'] == 경기_int, '영상링크'].values[0]
-            if 영상링크 != "영상없음":
-                st.video(영상링크)
-            else:
-                st.info("영상이 없습니다.")
-    except Exception as e:
-        st.error(f"오류 발생: {e}")
+            영상상태 = "업로드 예정"
+        
+        st.markdown(f"### ⚽ 경기 {경기}")
+        st.markdown(f"📅 경기일자: {match['경기일자']}")
+        st.markdown(f"📝 영상 상태: {영상상태}")
+        st.markdown("---")
 
 elif option == "득점자":
-    st.subheader("⚽ 득점 순위")
-    for i, row in sorted_scorers.iterrows():
-        name = row['이름']
-        team = row['반']
-        goals = row['득점']
-        if goals == max_goals:
-            color = 'gold'
-        elif goals == max_goals - 1:
-            color = 'silver'
-        elif goals == max_goals - 2:
-            color = 'bronze'
-        else:
-            color = None
+    st.subheader("다득점자")
+    top_scorers = sorted_scorers[sorted_scorers['득점'] >= 2].head(10)
 
-        if color:
-            st.markdown(scorer_card(name, team, goals, color), unsafe_allow_html=True)
+    for idx, row in top_scorers.iterrows():
+        # 메달 색상 설정
+        if row['득점'] == max_goals:
+            medal_color = 'gold'  # 금메달
+        elif row['득점'] == max_goals - 1:
+            medal_color = 'silver'  # 은메달
+        elif row['득점'] == max_goals - 2:
+            medal_color = 'bronze'  # 동메달
+        else:
+            medal_color = ''  # 메달 없음
+
+        st.markdown(scorer_card(row['이름'], row['소속'], row['득점'], medal_color), unsafe_allow_html=True)
 
 elif option == "반별 통계":
-    st.subheader("📊 반별 경기 통계")
-    st.dataframe(class_stats_df)
+    st.subheader("📊 반별 승/무/패 통계")
 
-else:
-    st.markdown("🏟️ **2025 아침체인지컵**에 오신 것을 환영합니다! 좌측 메뉴에서 항목을 선택해 주세요.")
+    # 반별로 성적을 보기 좋게 정렬
+    class_stats_df = class_stats_df.sort_values(by='득점', ascending=False)  # 득점 기준으로 정렬
+
+    # 각 반의 성적을 분석하여 추가 컬럼 생성 (승률, 실점 등)
+    class_stats_df['승률'] = class_stats_df['승'] / (class_stats_df['승'] + class_stats_df['무'] + class_stats_df['패'])
+    
+    # 색상 강조: 승률이 높은 반을 초록색, 낮은 반을 빨간색으로 강조
+    def highlight_best_worst(row):
+        if row['승률'] >= 0.6:
+            return ['background-color: green'] * len(row)
+        elif row['승률'] <= 0.3:
+            return ['background-color: red'] * len(row)
+        return [''] * len(row)
+
+    # 데이터프레임을 스타일링하여 승률 기준으로 색상 추가
+    styled_df = class_stats_df.style.apply(highlight_best_worst, axis=1)
+
+    # 반별 통계 출력
+    st.dataframe(styled_df)
