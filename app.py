@@ -107,7 +107,7 @@ elif option == "반별 통계":
     st.subheader("📊 반별 승/무/패 통계")
 
     # 승률 계산: 승 / (승 + 무 + 패)
-    class_stats_df['승률'] = class_stats_df['승'] / (class_stats_df['승'] + class_stats_df['무'] + class_stats_df['패'])
+    class_stats_df['승률'] = (class_stats_df['승'] / (class_stats_df['승'] + class_stats_df['무'] + class_stats_df['패'])) * 100
 
     # 득실 계산: 득점 - 실점
     class_stats_df['득실'] = class_stats_df['득점'] - class_stats_df['실점']
