@@ -1,6 +1,8 @@
 import streamlit as st
 import pandas as pd
 
+results_df = pd.read_csv("Book(Result).csv")
+
 st.title("📋 아침체인지컵 경기 결과")
 
 
