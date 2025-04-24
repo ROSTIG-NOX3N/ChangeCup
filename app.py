@@ -10,7 +10,6 @@ video_links_df = pd.read_csv('video_links.csv')
 # 페이지 제목
 st.title("⚽ 2025 아침체인지컵 ")
 
-# 사이드바 메뉴
 option = st.sidebar.selectbox(
     'Menu',
     ("메인 메뉴", "경기 결과", "득점자", "반별 통계")
@@ -60,36 +59,40 @@ def scorer_card(name, team, goals, medal_color):
     """
     return card_html
 
-# 득점자 출력
-if option == "득점자":
-    st.subheader("⚽ 득점자 순위")
-    
-    # 첫 번째, 두 번째, 세 번째 득점자
-    for idx, row in sorted_scorers.iterrows():
-        name = row['이름']
-        team = row['팀']
-        goals = row['득점']
-
-        # 메달 색상 설정
-        if goals == max_goals:
-            medal_color = 'gold'
-        elif goals == max_goals - 1:
-            medal_color = 'silver'
-        elif goals == max_goals - 2:
-            medal_color = 'bronze'
-        else:
-            medal_color = 'none'
-
-        # 득점자 카드 HTML 표시
-        card_html = scorer_card(name, team, goals, medal_color)
-        st.markdown(card_html, unsafe_allow_html=True)
-
-# 경기 결과
-elif option == "경기 결과":
+if option == "경기 결과":
     st.subheader("📋 전체 경기 결과")
     st.dataframe(results_df)
 
-# 반별 통계
+elif option == "메인 메뉴":
+    st.subheader("⚽ 아침체인지컵 메인 메뉴")
+    
+    # 경기 번호 기준으로 정렬 (최신 경기부터 표시)
+    results_df = results_df.sort_values(by='경기', ascending=False)
+    
+    # 경기 번호만 출력
+    for idx, match in results_df.iterrows():
+        경기 = match['경기']  # '경기번호' 대신 '경기' 사용
+        st.markdown(f"### ⚽ 경기 {경기}")
+        st.markdown(f"📅 경기일자: {match['경기일자']}")
+        st.markdown("---")
+
+elif option == "득점자":
+    st.subheader("다득점자")
+    top_scorers = sorted_scorers[sorted_scorers['득점'] >= 2].head(10)
+
+    for idx, row in top_scorers.iterrows():
+        # 메달 색상 설정
+        if row['득점'] == max_goals:
+            medal_color = 'gold'  # 금메달
+        elif row['득점'] == max_goals - 1:
+            medal_color = 'silver'  # 은메달
+        elif row['득점'] == max_goals - 2:
+            medal_color = 'bronze'  # 동메달
+        else:
+            medal_color = ''  # 메달 없음
+
+        st.markdown(scorer_card(row['이름'], row['소속'], row['득점'], medal_color), unsafe_allow_html=True)
+
 elif option == "반별 통계":
     st.subheader("📊 반별 승/무/패 통계")
 
@@ -102,5 +105,5 @@ elif option == "반별 통계":
     # 반별로 성적을 보기 좋게 정렬
     class_stats_df = class_stats_df.sort_values(by='득점', ascending=False)  # 득점 기준으로 정렬
 
-    # 반별 통계 출력
+    # 반별 통계 출력 (색상 변경 없이)
     st.dataframe(class_stats_df)
