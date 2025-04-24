@@ -75,8 +75,13 @@ if option == "메인 메뉴":
         # 선택된 조별 성적 출력
         st.dataframe(selected_group)
 
-        # 6조 확률 계산 (선생님 팀과 C조 제외)
-        exclude_groups = ['선생님팀', 'C조']  # 선생님팀과 C조를 제외
+        # C조 확정 팀을 제외하고 나머지 조별 본선 진출팀 계산
+        if 조선택 != "C":
+            # C조는 이미 확정된 팀 (2학년 2반) 제외
+            exclude_groups = ['선생님팀', 'C조']  # 선생님팀과 C조를 제외
+        else:
+            exclude_groups = ['선생님팀', 'C조']
+
         filtered_class_stats_df = class_stats_df[~class_stats_df['조'].isin(exclude_groups)]
 
         # 승률과 골득실을 기반으로 확률 계산
@@ -99,9 +104,15 @@ if option == "메인 메뉴":
         # 각 팀의 확률을 계산하여 새로운 컬럼에 추가
         filtered_class_stats_df['확률'] = filtered_class_stats_df.apply(calculate_probability, axis=1)
 
-        # 6조 데이터 확인
-        st.write("6조 팀들의 확률:")
+        # 결과 출력
+        st.write("각 조별 본선 진출 가능성 계산 결과:")
         st.write(filtered_class_stats_df[['학반', '승', '무', '패', '득점', '실점', '조', '확률']])
+
+        # 각 조에서 한 팀만 본선 진출 가능 표시 (C조는 이미 확정된 팀 제외)
+        if 조선택 != "C":
+            st.write(f"**{조선택} 조에서 본선 진출 가능성이 높은 팀은**:")
+            best_team = filtered_class_stats_df.loc[filtered_class_stats_df['확률'].idxmax()]
+            st.write(f"{best_team['학반']} (확률: {best_team['확률']*100:.2f}%)")
 
 # 경기 결과 탭
 elif option == "경기 일정":
