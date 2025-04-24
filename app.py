@@ -102,25 +102,5 @@ elif option == "득점자":
 elif option == "반별 통계":
     st.subheader("📊 반별 승/무/패 통계")
 
-    # 승률 계산: 승 / (승 + 무 + 패) 후 백분율로 변환
-    class_stats_df['승률'] = (class_stats_df['승'] / (class_stats_df['승'] + class_stats_df['무'] + class_stats_df['패'])) * 100
-
-    # 득실 계산: 득점 - 실점
-    class_stats_df['득실'] = class_stats_df['득점'] - class_stats_df['실점']
-
-    # 반 선택을 위한 selectbox (오름차순으로 정렬)
-    반선택 = st.selectbox(
-        "반을 선택하세요",
-        options=sorted(class_stats_df['학반'].unique())  # 반 이름을 오름차순으로 정렬
-    )
-
-    # 선택된 반의 데이터 필터링
-    selected_class = class_stats_df[class_stats_df['학반'] == 반선택]
-
-    # 선택된 반별 성적 출력
-    st.write(f"**{반선택}의 팀 성적:**")
-    st.dataframe(selected_class[['학반', '승', '무', '패', '득점', '실점', '승률']])
-
-    # 해당 반에서 본선 진출 가능성이 높은 팀 찾기
-    best_team = selected_class.loc[selected_class['승률'].idxmax()]
-    st.write(f"{반선택}에서 본선 진출 가능성이 높은 팀은: {best_team['학반']} (승률: {best_team['승률']:.2f}%)")
+    # 반별 통계 그대로 출력
+    st.dataframe(class_stats_df)
