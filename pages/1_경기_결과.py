@@ -15,5 +15,6 @@ for idx, match in results_df.iterrows():
 
     st.markdown(f"# ⚽ {경기번호}")
     st.markdown(f"### {팀1} {팀1득점} - {팀2득점} {팀2}")
-    st.write(f"##### 결과: {결과}")
+    st.markdown(f"##### 결과: {결과}")
+    st.markdown(f"##### 경기일자: {경기일자}")
     st.markdown("---")
