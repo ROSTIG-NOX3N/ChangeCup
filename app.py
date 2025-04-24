@@ -64,6 +64,7 @@ if option == "메인 메뉴":
         st.markdown("### A조 : 미정 ")
         st.markdown("### B조 : 미정 ")
         st.markdown("# C조 : 2학년 2반 ")
+        st.video("https://youtu.be/ZPLiaRIAfhg")
         st.markdown("### D조 : 미정 ")
         st.markdown("### E조 : 미정 ")
         st.markdown("### F조 : 미정 ")
