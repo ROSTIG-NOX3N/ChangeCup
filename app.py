@@ -74,7 +74,7 @@ if option == "메인 메뉴":
         # 스타일 함수 정의 (C조 2학년 2반만 초록색, 나머지는 기본 배경)
         def colorize(row):
             # 'C조'의 '2학년 2반'만 초록색 배경
-            if row['조'] == 'C' and row['반'] == '2학년 2반':
+            if row['조'] == 'C' and row['학반'] == '2학년 2반':
                 return ['background-color: green; color: white'] * len(row)
             else:
                 return [''] * len(row)  # 기본 배경
@@ -121,7 +121,7 @@ elif option == "반별 통계":
 
     # 스타일 함수 정의 (C조 2학년 2반만 초록색, 나머지는 기본 배경)
     def colorize(row):
-        if row['조'] == 'C' and row['반'] == '2학년 2반':
+        if row['조'] == 'C' and row['학반'] == '2학년 2반':
             return ['background-color: green; color: white'] * len(row)
         else:
             return [''] * len(row)  # 기본 배경
