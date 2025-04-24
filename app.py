@@ -71,39 +71,43 @@ if option == "메인 메뉴":
     # '경기' 열에 NaN 값이 있을 경우 처리
     results_df = results_df.dropna(subset=['경기'])
 
-    # 경기 번호 기준으로 정렬
-    results_df = results_df.sort_values(by='경기', ascending=False)
+    # 결과가 비어있을 경우 처리
+    if results_df.empty:
+        st.error("경기 결과 데이터가 없습니다.")
+    else:
+        # 경기 번호 기준으로 정렬
+        results_df = results_df.sort_values(by='경기', ascending=False)
 
-    # 가장 최근 경기 번호 찾기
-    latest_match_number = results_df.iloc[0]['경기']
+        # 가장 최근 경기 번호 찾기
+        latest_match_number = results_df.iloc[0]['경기']
 
-    # 최근 경기 번호 기준으로 n-2, n-1, n, n+1, n+2, n+3 경기를 가져오기
-    matches_to_display = results_df[
-        (results_df['경기'] >= latest_match_number - 2) &
-        (results_df['경기'] <= latest_match_number + 3)
-    ]
+        # 최근 경기 번호 기준으로 n-2, n-1, n, n+1, n+2, n+3 경기를 가져오기
+        matches_to_display = results_df[
+            (results_df['경기'] >= latest_match_number - 2) &
+            (results_df['경기'] <= latest_match_number + 3)
+        ]
 
-    # 한 경기씩 출력
-    for idx, match in matches_to_display.iterrows():
-        경기번호 = match['경기']
-        팀1 = match['1팀']
-        팀2 = match['2팀']
-        팀1득점 = match['1팀득점']
-        팀2득점 = match['2팀득점']
-        결과 = match['결과']
-        조 = match['조']
-        경기일자 = match['경기일자']
+        # 한 경기씩 출력
+        for idx, match in matches_to_display.iterrows():
+            경기번호 = match['경기']
+            팀1 = match['1팀']
+            팀2 = match['2팀']
+            팀1득점 = match['1팀득점']
+            팀2득점 = match['2팀득점']
+            결과 = match['결과']
+            조 = match['조']
+            경기일자 = match['경기일자']
 
-        st.markdown(f"### ⚽ {경기번호} | {조}조")
-        if str(팀1득점).isdigit() and str(팀2득점).isdigit():
-            st.markdown(f"**{팀1}** {팀1득점} : {팀2득점} **{팀2}**")
-            st.markdown(f"📌 결과: {결과}")
-        else:
-            st.markdown(f"**{팀1}** vs **{팀2}**")
-            st.markdown("⏳ 경기 예정")
+            st.markdown(f"### ⚽ {경기번호} | {조}조")
+            if str(팀1득점).isdigit() and str(팀2득점).isdigit():
+                st.markdown(f"**{팀1}** {팀1득점} : {팀2득점} **{팀2}**")
+                st.markdown(f"📌 결과: {결과}")
+            else:
+                st.markdown(f"**{팀1}** vs **{팀2}**")
+                st.markdown("⏳ 경기 예정")
 
-        st.markdown(f"📅 경기일자: {경기일자}")
-        st.markdown("---")
+            st.markdown(f"📅 경기일자: {경기일자}")
+            st.markdown("---")
 
 # '경기 결과'일 때
 elif option == "경기 결과":
