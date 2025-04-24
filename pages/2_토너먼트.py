@@ -1,4 +1,5 @@
 import pandas as pd
+import streamlit as st
 
 # CSV 파일 경로
 file_path = 'Book(Class_Stat).csv'  # 실제 경로에 맞게 수정 필요
