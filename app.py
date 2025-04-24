@@ -99,7 +99,7 @@ if option == "메인 메뉴":
         # 강조 스타일 함수
         def highlight_qualified(row):
             if row["학반"] == "2학년 2반":
-                return ['background-color: lightgreen'] * len(row)
+                return ['background-color: green'] * len(row)
             else:
                 return [''] * len(row)
     
