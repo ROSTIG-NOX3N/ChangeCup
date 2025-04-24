@@ -70,9 +70,6 @@ if option == "메인 메뉴":
     
         # 득실 계산: 득점 - 실점
         selected_group['득실'] = selected_group['득점'] - selected_group['실점']
-    
-        # 선택된 조별 성적 출력
-        st.dataframe(selected_group)
 
         # 스타일 함수 정의 (C조 2학년 2반을 초록색, 나머지는 빨간색)
         def colorize(val, row):
@@ -122,8 +119,15 @@ elif option == "반별 통계":
     # 득실 계산: 득점 - 실점
     class_stats_df['득실'] = class_stats_df['득점'] - class_stats_df['실점']
 
-    # 반별로 성적을 보기 좋게 정렬
-    class_stats_df = class_stats_df.sort_values(by='득점', ascending=False)  # 득점 기준으로 정렬
+    # 스타일 함수 정의 (C조 2학년 2반만 초록색, 나머지는 빨간색)
+    def colorize(val, row):
+        if row['조'] == 'C' and row['반'] == '2학년 2반':
+            return 'background-color: green; color: white'
+        else:
+            return 'background-color: red; color: white'
 
-    # 반별 통계 출력 (색상 변경 없이)
-    st.dataframe(class_stats_df)
+    # 스타일 적용
+    styled_df = class_stats_df.style.applymap(lambda val: colorize(val, class_stats_df), subset=['조', '반'])
+
+    # 반별 성적 출력
+    st.dataframe(styled_df)
