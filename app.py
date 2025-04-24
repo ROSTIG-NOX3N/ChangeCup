@@ -30,6 +30,3 @@ elif section == "반별 통계":
     st.subheader("📊 반별 승/무/패 통계")
     st.dataframe(class_stats_df)
 
-
-elif section == "메인 메뉴":
-    st.dataframe(results_df) # 테이블 보기
