@@ -29,18 +29,13 @@ option = st.sidebar.selectbox(
 # 메인 메뉴 탭 기능
 if option == "메인 메뉴":
     # 탭 3개: 공지사항, 경기영상, 조별결과
-    tab_option = st.radio(
-        "메인 메뉴 선택",
-        ("공지사항", "경기영상", "조별결과")
-    )
+    tab1, tab2, tab3 = st.tabs(["공지사항", "경기영상", "조별결과"])
 
-    # 공지사항 탭
-    if tab_option == "공지사항":
+    with tab1:
         st.subheader("공지사항")
         st.write("여기에 공지사항을 입력하세요.")
 
-    # 경기영상 탭
-    elif tab_option == "경기영상":
+    with tab2:
         # 경기 번호 4부터 10까지 선택할 수 있는 Selectbox
         경기선택 = st.selectbox(
             "경기를 선택하세요",
@@ -62,8 +57,7 @@ if option == "메인 메뉴":
         else:
             st.write("이 경기는 영상이 아직 업로드되지 않았습니다.")
 
-    # 조별결과 탭
-    elif tab_option == "조별결과":
+    with tab3:
         st.subheader("📊 조별 승/무/패 통계")
     
         # 조 선택을 위한 selectbox (오름차순으로 정렬)
