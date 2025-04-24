@@ -65,9 +65,8 @@ if option == "경기 결과":
 
 elif option == "메인 메뉴":
     for 경기 in range(4, 11):  # 4경기부터 10경기까지 반복
-        if st.button(f"경기 {경기} 영상 보기"):
-            st.balloons()  # 버튼 클릭 시 풍선 효과
-            st.title(f"경기 {경기} 영상")
+        if st.button(f"{경기} 영상 보기"):
+            st.title(f"{경기} 영상")
             
             # 영상 링크 찾기
             영상링크 = video_links.get(경기, "영상없음")
