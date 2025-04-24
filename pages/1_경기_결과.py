@@ -13,6 +13,6 @@ for idx, match in results_df.iterrows():
     팀2득점 = match['2팀득점']
     결과 = match['결과']
 
-    st.markdown(f"### ⚽ {경기번호}경기: {팀1} {팀1득점} - {팀2득점} {팀2}")
+    st.markdown(f"### ⚽ {경기번호}: {팀1} {팀1득점} - {팀2득점} {팀2}")
     st.write(f"📌 결과: {결과}")
     st.markdown("---")
