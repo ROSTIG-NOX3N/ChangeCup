@@ -74,6 +74,20 @@ if option == "메인 메뉴":
         # 선택된 조별 성적 출력
         st.dataframe(selected_group)
 
+        # 스타일 함수 정의 (C조 2학년 2반을 초록색, 나머지는 빨간색)
+        def colorize(val, row):
+            # C조 2학년 2반만 초록색으로, 나머지는 빨간색
+            if row['조'] == 'C' and row['반'] == '2학년 2반':
+                return 'background-color: green; color: white'
+            else:
+                return 'background-color: red; color: white'
+
+        # 스타일 적용
+        styled_df = selected_group.style.applymap(lambda val: colorize(val, selected_group), subset=['조', '반'])
+
+        # 선택된 조별 성적 출력
+        st.dataframe(styled_df)
+
 # 경기 결과 탭
 elif option == "경기 일정":
     st.subheader("📋 전체 경기 일정")
