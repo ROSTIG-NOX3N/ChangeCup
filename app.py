@@ -83,29 +83,29 @@ if option == "메인 메뉴":
             st.dataframe(sorted_group[["학반", "승", "무", "패", "득점", "실점", "승점", "골득실"]])
 
     with tab4:
-    st.markdown("### 📊 전체 결과")
-
-    # 승점과 골득실 계산
-    class_stats_df_display = class_stats_df.copy()
-    class_stats_df_display["승점"] = class_stats_df_display["승"] * 3 + class_stats_df_display["무"]
-    class_stats_df_display["골득실"] = class_stats_df_display["득점"] - class_stats_df_display["실점"]
-
-    # 정렬
-    sorted_all = class_stats_df_display.sort_values(
-        by=["승점", "골득실", "득점", "실점"],
-        ascending=[False, False, False, True]
-    ).reset_index(drop=True)
-
-    # 강조 스타일 함수
-    def highlight_qualified(row):
-        if row["학반"] == "2학년 2반":
-            return ['background-color: lightgreen'] * len(row)
-        else:
-            return [''] * len(row)
-
-    st.dataframe(
-        sorted_all[["학반", "승", "무", "패", "득점", "실점", "승점", "골득실"]].style.apply(highlight_qualified, axis=1)
-    )
+        st.markdown("### 📊 전체 결과")
+    
+        # 승점과 골득실 계산
+        class_stats_df_display = class_stats_df.copy()
+        class_stats_df_display["승점"] = class_stats_df_display["승"] * 3 + class_stats_df_display["무"]
+        class_stats_df_display["골득실"] = class_stats_df_display["득점"] - class_stats_df_display["실점"]
+    
+        # 정렬
+        sorted_all = class_stats_df_display.sort_values(
+            by=["승점", "골득실", "득점", "실점"],
+            ascending=[False, False, False, True]
+        ).reset_index(drop=True)
+    
+        # 강조 스타일 함수
+        def highlight_qualified(row):
+            if row["학반"] == "2학년 2반":
+                return ['background-color: lightgreen'] * len(row)
+            else:
+                return [''] * len(row)
+    
+        st.dataframe(
+            sorted_all[["학반", "승", "무", "패", "득점", "실점", "승점", "골득실"]].style.apply(highlight_qualified, axis=1)
+        )
 
 # 경기 결과 탭
 elif option == "경기 일정":
