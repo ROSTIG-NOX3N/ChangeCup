@@ -112,18 +112,10 @@ elif option == "반별 통계":
     class_stats_df = class_stats_df.sort_values(by='득점', ascending=False)  # 득점 기준으로 정렬
 
     # 각 반의 성적을 분석하여 추가 컬럼 생성 (승률, 실점 등)
-    class_stats_df['승률'] = class_stats_df['승'] / (class_stats_df['승'] + class_stats_df['무'] + class_stats_df['패'])
-    
-    # 색상 강조: 승률이 높은 반을 초록색, 낮은 반을 빨간색으로 강조
-    def highlight_best_worst(row):
-        if row['승률'] >= 0.6:
-            return ['background-color: green'] * len(row)
-        elif row['승률'] <= 0.3:
-            return ['background-color: red'] * len(row)
-        return [''] * len(row)
+    class_stats_df['승률'] = (class_stats_df['승'] / (class_stats_df['승'] + class_stats_df['무'] + class_stats_df['패'])) * 100
 
-    # 데이터프레임을 스타일링하여 승률 기준으로 색상 추가
-    styled_df = class_stats_df.style.apply(highlight_best_worst, axis=1)
+    # 승률을 소수점 2자리로 제한하여 백분율로 표시
+    class_stats_df['승률'] = class_stats_df['승률'].round(2)
 
-    # 반별 통계 출력
-    st.dataframe(styled_df)
+    # 반별 통계를 표시
+    st.dataframe(class_stats_df)
