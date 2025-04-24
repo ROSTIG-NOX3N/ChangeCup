@@ -51,10 +51,8 @@ if option == "경기 결과":
     st.dataframe(results_df)
 
 elif option == "득점자":
-    st.subheader("🥅 득점자 순위 (10위까지만 표시)")
-
-    # 10위까지만 표시
-    top_scorers = sorted_scorers.head(10)
+    st.subheader("득점 순위")
+    top_scorers = sorted_scorers[sorted_scorers['득점'] >= 2].head(10)
 
     for idx, row in top_scorers.iterrows():
         st.markdown(scorer_card(row['이름'], row['소속'], row['득점']), unsafe_allow_html=True)
