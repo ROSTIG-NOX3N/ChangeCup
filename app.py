@@ -15,7 +15,7 @@ option = st.sidebar.selectbox(
     'Menu',
     ("메인 메뉴", "경기 일정", "득점자", "반별 통계")
 )
-
+st.write(class_stats_df.columns)
 # 메인 메뉴 탭 기능
 if option == "메인 메뉴":
     # 탭 3개: 공지사항, 경기영상, 조별결과
