@@ -5,8 +5,6 @@ match_data = pd.read_csv("Book(Result).csv")
 st.set_page_config(page_title="경기 결과", layout="wide")
 st.title("🏆 경기 결과 및 득점자")
 
-with open("match_results.json", "r", encoding="utf-8") as f:
-    match_data = json.load(f)
 
 for match in match_data:
     st.markdown(f"""
