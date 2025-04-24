@@ -7,6 +7,10 @@ results_df = pd.read_csv('Book(Result).csv')
 scorers_df = pd.read_csv('Book(Scorer).csv')
 class_stats_df = pd.read_csv('Book(Class_Stat).csv')
 
+# 득실과 승률 추가
+class_stats_df['득실'] = class_stats_df['득점'] - class_stats_df['실점']
+class_stats_df['승률'] = (class_stats_df['승'] / (class_stats_df['승'] + class_stats_df['무'] + class_stats_df['패'])) * 100
+
 # 페이지 제목
 st.title("⚽ 2025 아침체인지컵 ")
 
@@ -102,5 +106,5 @@ elif option == "득점자":
 elif option == "반별 통계":
     st.subheader("📊 반별 승/무/패 통계")
 
-    # 반별 통계 그대로 출력
-    st.dataframe(class_stats_df)
+    # 반별 통계 데이터프레임 출력 (득실과 승률 포함)
+    st.dataframe(class_stats_df[['조', '반', '승', '무', '패', '득점', '실점', '득실', '승률']])
