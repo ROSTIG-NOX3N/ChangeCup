@@ -68,8 +68,63 @@ if option == "메인 메뉴":
     tab1, tab2, tab3, tab4 = st.tabs(["공지사항", "경기영상", "조별결과", "전체 결과"])
 
     with tab1:
-        st.markdown("### 📢 공지사항")
-        st.info("여기에 대회 관련 공지사항을 입력하세요.")
+        st.markdown("""
+            <style>
+            .group-box {
+                border-radius: 12px;
+                padding: 15px;
+                margin-bottom: 10px;
+                background-color: #f0f2f6;
+                border: 1px solid #ccc;
+            }
+    
+            .group-box h4 {
+                margin: 0;
+            }
+    
+            .qualified {
+                color: white;
+                background-color: #28a745;
+                padding: 4px 8px;
+                border-radius: 6px;
+                font-size: 0.9em;
+            }
+    
+            .pending {
+                color: #555;
+                background-color: #eaeaea;
+                padding: 4px 8px;
+                border-radius: 6px;
+                font-size: 0.9em;
+            }
+    
+            @media (prefers-color-scheme: dark) {
+                .group-box {
+                    background-color: #2a2a2a;
+                    border: 1px solid #444;
+                }
+    
+                .pending {
+                    background-color: #444;
+                    color: #ccc;
+                }
+            }
+            </style>
+    
+            <div class='group-box'><h4>A조 : <span class='pending'>미정</span></h4></div>
+            <div class='group-box'><h4>B조 : <span class='pending'>미정</span></h4></div>
+            <div class='group-box'><h4>C조 : <span class='qualified'>2학년 2반</span></h4></div>
+            <div style="margin-bottom: 15px;">
+                <video controls width="100%">
+                    <source src="https://youtu.be/ZPLiaRIAfhg" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+            <div class='group-box'><h4>D조 : <span class='pending'>미정</span></h4></div>
+            <div class='group-box'><h4>E조 : <span class='pending'>미정</span></h4></div>
+            <div class='group-box'><h4>F조 : <span class='pending'>미정</span></h4></div>
+            <div class='group-box'><h4>G조 : <span class='pending'>미정</span></h4></div>
+        """, unsafe_allow_html=True)
 
     with tab2:
         st.markdown("### 🎥 경기 영상")
