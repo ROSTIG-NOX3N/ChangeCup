@@ -180,7 +180,7 @@ if option == "메인 메뉴":
     
         def highlight_qualified(row):
             if row["학반"] == "2학년 2반":
-                return ['background-color: lightgreen'] * len(row)
+                return ['background-color: green'] * len(row)
             return [''] * len(row)
     
         for group, group_data in grouped.groupby("조"):
