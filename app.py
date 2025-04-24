@@ -17,6 +17,7 @@ option = st.sidebar.selectbox(
 
 # 득점자 순위를 위한 정렬
 sorted_scorers = scorers_df.sort_values(by='득점', ascending=False)
+st.write("🎯 video_links_df 컬럼:", video_links_df.columns.tolist())
 
 # 최댓값 득점자 수
 max_goals = sorted_scorers['득점'].max()
