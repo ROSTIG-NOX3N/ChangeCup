@@ -67,14 +67,14 @@ elif option == "메인 메뉴":
     # 경기 번호 4부터 10까지 선택할 수 있는 Selectbox
     경기선택 = st.selectbox(
         "경기를 선택하세요",
-        options=[f"{경기} 영상 보기" for 경기 in range(4, 11)]  # 4경기부터 10경기까지 선택 옵션 생성
+        options=[f"{경기}경기 영상 보기" for 경기 in range(4, 11)]  # 4경기부터 10경기까지 선택 옵션 생성
     )
 
     # 선택한 경기 번호
     경기번호 = int(경기선택.split()[0])
 
     # 선택된 경기 영상 보여주기
-    st.title(f"{경기번호} 영상")
+    st.title(f"{경기번호}경기 영상")
     
     # 영상 링크 찾기
     영상링크 = video_links.get(경기번호, "영상없음")
