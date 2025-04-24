@@ -8,7 +8,7 @@ class_stats_df = pd.read_csv('Book(Class_Stat).csv')
 
 # 페이지 제목
 st.title("⚽ 2025 아침체인지컵 ")
-
+sorted_scorers = scorers_df.sort_values(by='득점', ascending=False)
 
 option = st.sidebar.selectbox(
     'Menu',
