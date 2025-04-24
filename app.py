@@ -64,7 +64,22 @@ if option == "경기 결과":
     st.dataframe(results_df)
 
 elif option == "메인 메뉴":
-    st.subheader("⚽ 아침체인지컵 메인 메뉴")
+    for idx, match in results_df.iterrows():
+        경기 = match['경기']
+        
+        # 버튼을 만들어 해당 경기 영상 보기
+        if st.button(f"경기 {경기} 영상 보기"):
+            st.balloons()  # 버튼 클릭 시 풍선 효과
+            st.title(f"경기 {경기} 영상")
+            
+            # 영상 링크 찾기
+            영상링크 = video_links_df.loc[video_links_df['경기번호'] == 경기, '영상링크'].values
+            
+            # 영상이 존재하면 표시
+            if len(영상링크) > 0 and 영상링크[0] != "영상없음":
+                st.video(영상링크[0])
+            else:
+                st.write("이 경기는 영상이 아직 업로드되지 않았습니다.")
     
 elif option == "득점자":
     st.subheader("다득점자")
