@@ -62,6 +62,19 @@ def scorer_card(name, team, goals, medal_color):
     """
     return card_html
 
+# 영상링크 불러오기
+video_links_df = pd.read_csv('video_links.csv')
+
+# 컬럼명 공백 제거
+video_links_df.columns = video_links_df.columns.str.strip().str.replace(" ", "")
+
+# 확인용 출력
+st.write("video_links_df 컬럼:", video_links_df.columns.tolist())
+
+# 타입 변환
+video_links_df['경기번호'] = video_links_df['경기번호'].astype(int)
+video_links_df['영상링크'] = video_links_df['영상링크'].astype(str).str.strip()
+
 # 메뉴별 화면 구성
 if option == "메인 메뉴":
     st.subheader("메인 페이지")
