@@ -74,7 +74,7 @@ elif option == "메인 메뉴":
         경기 = match['경기']  # 여기에서 '경기번호' 대신 '경기' 사용
         
         # 영상 링크 가져오기
-        영상링크 = video_links_df.loc[video_links_df['경기'] == 경기, '영상링크'].values  # '경기번호' 대신 '경기'로 수정
+        영상링크 = video_links_df.loc[video_links_df['경기번호'] == 경기, '영상링크'].values  # '경기번호'로 수정
         
         if 경기 <= 3:
             영상상태 = "영상없음"
