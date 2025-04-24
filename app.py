@@ -131,21 +131,27 @@ elif option == "경기 일정":
 # 득점자 탭
 elif option == "득점자":
     st.subheader("다득점자")
+    
+    # 득점자 목록을 득점수로 내림차순 정렬
     sorted_scorers = scorers_df.sort_values(by='득점', ascending=False)
     max_goals = sorted_scorers['득점'].max()
 
+    # 득점자가 2골 이상인 경우만 카드 출력
     for idx, row in sorted_scorers.iterrows():
-        # 메달 색상 설정
-        if row['득점'] == max_goals:
-            medal_color = 'gold'  # 금메달
-        elif row['득점'] == max_goals - 1:
-            medal_color = 'silver'  # 은메달
-        elif row['득점'] == max_goals - 2:
-            medal_color = 'bronze'  # 동메달
-        else:
-            medal_color = ''  # 메달 없음
+        if row['득점'] >= 2:  # 2골 이상인 경우만 출력
+            # 메달 색상 설정
+            if row['득점'] == max_goals:
+                medal_color = 'gold'  # 금메달
+            elif row['득점'] == max_goals - 1:
+                medal_color = 'silver'  # 은메달
+            elif row['득점'] == max_goals - 2:
+                medal_color = 'bronze'  # 동메달
+            else:
+                medal_color = ''  # 메달 없음
 
-        st.markdown(scorer_card(row['이름'], row['소속'], row['득점'], medal_color), unsafe_allow_html=True)
+            # 득점자 카드 출력
+            st.markdown(scorer_card(row['이름'], row['소속'], row['득점'], medal_color), unsafe_allow_html=True)
+변경된 부분:
 
 # 반별 통계 탭
 elif option == "반별 통계":
