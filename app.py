@@ -17,7 +17,7 @@ option = st.sidebar.selectbox(
 sorted_scorers = scorers_df.sort_values(by='득점', ascending=False)
 
 # CSS 영역
-def scorer_card(name, team, goals, rank_label):
+def scorer_card(name, team, goals):
     card_html = f"""
     <style>
     .scorer-card {{
@@ -40,8 +40,8 @@ def scorer_card(name, team, goals, rank_label):
     </style>
 
     <div class="scorer-card">
-        <h4 style="margin: 0;">🏅 {rank_label} - {name} ({team})</h4>
-        <p style="margin: 0;">⚽ 득점 수: <strong>{goals}</strong></p>
+        <h4 style="margin: 0;">🏅 {name} ({team})</h4>
+        <p style="margin: 0;">⚽ 득점 수: <strong>{goals}골</strong></p>
     </div>
     """
     return card_html
@@ -51,26 +51,13 @@ if option == "경기 결과":
     st.dataframe(results_df)
 
 elif option == "득점자":
-    st.subheader("🥅 득점자 순위")
-    prev_goals = None
-    rank = 1  # 순위는 1부터 시작
-    rank_group = 1  # 동일 득점자들을 묶기 위한 그룹 번호
-    
-    for idx, row in sorted_scorers.iterrows():
-        goals = row['득점']
-        
-        if goals != prev_goals:
-            # 득점이 다르면 새로운 순위
-            rank = rank_group
-            rank_label = f"{rank}위"
-            rank_group += 1  # 그룹 번호를 하나씩 증가
-        else:
-            # 득점이 같으면 공동 순위
-            rank_label = f"공동 {rank}위"
-        
-        st.markdown(scorer_card(row['이름'], row['소속'], goals, rank_label), unsafe_allow_html=True)
-        
-        prev_goals = goals  # 이전 득점자와 비교를 위해 설정
+    st.subheader("🥅 득점자 순위 (10위까지만 표시)")
+
+    # 10위까지만 표시
+    top_scorers = sorted_scorers.head(10)
+
+    for idx, row in top_scorers.iterrows():
+        st.markdown(scorer_card(row['이름'], row['소속'], row['득점']), unsafe_allow_html=True)
 
 elif option == "반별 통계":
     st.subheader("📊 반별 승/무/패 통계")
