@@ -6,6 +6,9 @@ results_df = pd.read_csv('Book(Result).csv')
 scorers_df = pd.read_csv('Book(Scorer).csv')
 class_stats_df = pd.read_csv('Book(Class_Stat).csv')
 
+# 유튜브 영상 링크 데이터 불러오기
+video_links_df = pd.read_csv('video_links.csv')
+
 # 페이지 제목
 st.title("⚽ 2025 아침체인지컵 ")
 
@@ -60,15 +63,13 @@ def scorer_card(name, team, goals, medal_color):
 if option == "경기 결과":
     st.subheader("📋 전체 경기 결과")
     st.dataframe(results_df)
+
 # 메인 메뉴에서 영상 링크 표시
 elif option == "메인 메뉴":
     st.subheader("⚽ 아침체인지컵 메인 메뉴")
     
     # 경기 번호 기준으로 정렬 (최신 경기부터 표시)
     results_df = results_df.sort_values(by='경기', ascending=False)
-    
-    # 가장 최근 경기 번호 찾기
-    latest_match_number = results_df.iloc[0]['경기']
     
     # 경기 번호 4~10에 대한 유튜브 영상 링크 가져오기
     for idx, match in results_df.iterrows():
