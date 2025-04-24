@@ -16,8 +16,19 @@ option = st.sidebar.selectbox(
 # 득점자 순위를 위한 정렬
 sorted_scorers = scorers_df.sort_values(by='득점', ascending=False)
 
+# 최댓값 득점자 수
+max_goals = sorted_scorers['득점'].max()
+
 # CSS 영역
-def scorer_card(name, team, goals):
+def scorer_card(name, team, goals, medal_color):
+    medal_html = ""
+    if medal_color == 'gold':
+        medal_html = "<span style='color: gold;'>🥇</span>"
+    elif medal_color == 'silver':
+        medal_html = "<span style='color: silver;'>🥈</span>"
+    elif medal_color == 'bronze':
+        medal_html = "<span style='color: #cd7f32;'>🥉</span>"
+
     card_html = f"""
     <style>
     .scorer-card {{
@@ -40,7 +51,7 @@ def scorer_card(name, team, goals):
     </style>
 
     <div class="scorer-card">
-        <h4 style="margin: 0;">🏅 {name} ({team})</h4>
+        <h4 style="margin: 0;">{medal_html} {name} ({team})</h4>
         <p style="margin: 0;">⚽ 득점 수: <strong>{goals}골</strong></p>
     </div>
     """
@@ -51,11 +62,21 @@ if option == "경기 결과":
     st.dataframe(results_df)
 
 elif option == "득점자":
-    st.subheader("득점 순위")
+    st.subheader("다득점자")
     top_scorers = sorted_scorers[sorted_scorers['득점'] >= 2].head(10)
 
     for idx, row in top_scorers.iterrows():
-        st.markdown(scorer_card(row['이름'], row['소속'], row['득점']), unsafe_allow_html=True)
+        # 메달 색상 설정
+        if row['득점'] == max_goals:
+            medal_color = 'gold'  # 금메달
+        elif row['득점'] == max_goals - 1:
+            medal_color = 'silver'  # 은메달
+        elif row['득점'] == max_goals - 2:
+            medal_color = 'bronze'  # 동메달
+        else:
+            medal_color = ''  # 메달 없음
+
+        st.markdown(scorer_card(row['이름'], row['소속'], row['득점'], medal_color), unsafe_allow_html=True)
 
 elif option == "반별 통계":
     st.subheader("📊 반별 승/무/패 통계")
