@@ -212,12 +212,6 @@ if option == "메인 메뉴":
             sorted_all[["학반", "승", "무", "패", "득점", "실점", "승점", "골득실"]]
             .style.apply(highlight_qualified, axis=1)
         )
-
-# 경기 결과 탭
-elif option == "경기 일정":
-    st.subheader("📋 전체 경기 일정")
-    st.dataframe(results_df)
-
 # 득점자 탭
 elif option == "득점자":
     st.subheader("다득점자")
