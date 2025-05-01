@@ -21,7 +21,7 @@ class_stats_df["sort_order"] = class_stats_df["학반"].apply(sort_key)
 # 사이드 메뉴
 option = st.sidebar.selectbox(
     'Menu',
-    ("메인 메뉴", "경기 일정", "득점자", "반별 통계")
+    ("메인 메뉴", "득점자", "반별 통계")
 )
 
 # CSS 영역
