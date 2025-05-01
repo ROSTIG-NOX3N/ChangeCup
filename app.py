@@ -7,10 +7,6 @@ results_df = pd.read_csv('Book(Result).csv')
 scorers_df = pd.read_csv('Book(Scorer).csv')
 class_stats_df = pd.read_csv('Book(Class_Stat).csv')
 
-st.set_page_config(
-    page_title="메인 메뉴"
-)
-
 # 페이지 제목
 st.title("⚽ 2025 아침체인지컵 ")
 
