@@ -202,11 +202,16 @@ elif page == '경기 일정':
     with tabs[0]:
         for _, m in results_df.iterrows():
             if str(m['1팀득점']).isdigit() and str(m['2팀득점']).isdigit():
-                # "4월 1일" 같은 문자열에서 월·일만 추출
-                mo, day = map(int, re.findall(r'(\d+)월\s*(\d+)일', m['경기일자'])[0])
-                dt = datetime(2025, mo, day)
-                weekday = ['월','화','수','목','금','토','일'][dt.weekday()]
-                date_display = f"{dt.year}년 {mo}월 {day}일 ({weekday}요일)"
+                raw = m['경기일자']
+                # 월·일 추출 시도
+                match = re.search(r'(\d+)월\s*(\d+)일', raw)
+                if match:
+                    mo, day = map(int, match.groups())
+                    dt = datetime(2025, mo, day)
+                    weekday = ['월','화','수','목','금','토','일'][dt.weekday()]
+                    date_display = f"{dt.year}년 {mo}월 {day}일 ({weekday}요일)"
+                else:
+                    date_display = raw  # "미정" 등 그대로
 
                 st.markdown(f"""
                 <div class="match-card">
@@ -221,10 +226,15 @@ elif page == '경기 일정':
     with tabs[1]:
         for _, m in results_df.iterrows():
             if not (str(m['1팀득점']).isdigit() and str(m['2팀득점']).isdigit()):
-                mo, day = map(int, re.findall(r'(\d+)월\s*(\d+)일', m['경기일자'])[0])
-                dt = datetime(2025, mo, day)
-                weekday = ['월','화','수','목','금','토','일'][dt.weekday()]
-                date_display = f"{dt.year}년 {mo}월 {day}일 ({weekday}요일)"
+                raw = m['경기일자']
+                match = re.search(r'(\d+)월\s*(\d+)일', raw)
+                if match:
+                    mo, day = map(int, match.groups())
+                    dt = datetime(2025, mo, day)
+                    weekday = ['월','화','수','목','금','토','일'][dt.weekday()]
+                    date_display = f"{dt.year}년 {mo}월 {day}일 ({weekday}요일)"
+                else:
+                    date_display = raw
 
                 st.markdown(f"""
                 <div class="match-card scheduled">
