@@ -13,7 +13,11 @@ st.set_page_config(
 )
 
 # 데이터 불러오기
-results_df = pd.read_csv('Book(Result).csv')
+results_df = pd.read_csv(
+    'Book(Result).csv',
+    dtype={'경기일자': str},
+    keep_default_na=False
+)
 scorers_df = pd.read_csv('Book(Scorer).csv')
 class_stats_df = pd.read_csv('Book(Class_Stat).csv')
 
@@ -191,7 +195,7 @@ if page == '메인 메뉴':
 elif page == '경기 일정':
     st.subheader('📅 경기 일정')
     tabs = st.tabs(['✅ 완료된 경기', '⏳ 예정된 경기'])
-    
+
     # 완료된 경기
     with tabs[0]:
         for _, m in results_df.iterrows():
@@ -205,7 +209,7 @@ elif page == '경기 일정':
                   <p>📌 <strong>결과:</strong> {m['결과']}</p>
                 </div>
                 """, unsafe_allow_html=True)
-    
+
     # 예정된 경기
     with tabs[1]:
         for _, m in results_df.iterrows():
@@ -219,6 +223,7 @@ elif page == '경기 일정':
                   <p>📌 <strong>결과:</strong> ⏳ 경기 예정</p>
                 </div>
                 """, unsafe_allow_html=True)
+
 
 elif page=='득점자':
     st.subheader('다득점자')
