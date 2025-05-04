@@ -4,6 +4,8 @@ from video_links import video_links
 from PIL import Image
 import base64
 from io import BytesIO
+import re
+from datetime import datetime
 
 # 페이지 설정
 st.set_page_config(
@@ -200,7 +202,12 @@ elif page == '경기 일정':
     with tabs[0]:
         for _, m in results_df.iterrows():
             if str(m['1팀득점']).isdigit() and str(m['2팀득점']).isdigit():
-                date_display = m['경기일자']
+                # "4월 1일" 같은 문자열에서 월·일만 추출
+                mo, day = map(int, re.findall(r'(\d+)월\s*(\d+)일', m['경기일자'])[0])
+                dt = datetime(2025, mo, day)
+                weekday = ['월','화','수','목','금','토','일'][dt.weekday()]
+                date_display = f"{dt.year}년 {mo}월 {day}일 ({weekday}요일)"
+
                 st.markdown(f"""
                 <div class="match-card">
                   <h4>⚽ 경기 {m['경기']} | <span style='color: #007ACC;'>{m['조']}조</span></h4>
@@ -214,7 +221,11 @@ elif page == '경기 일정':
     with tabs[1]:
         for _, m in results_df.iterrows():
             if not (str(m['1팀득점']).isdigit() and str(m['2팀득점']).isdigit()):
-                date_display = m['경기일자']
+                mo, day = map(int, re.findall(r'(\d+)월\s*(\d+)일', m['경기일자'])[0])
+                dt = datetime(2025, mo, day)
+                weekday = ['월','화','수','목','금','토','일'][dt.weekday()]
+                date_display = f"{dt.year}년 {mo}월 {day}일 ({weekday}요일)"
+
                 st.markdown(f"""
                 <div class="match-card scheduled">
                   <h4>⚽ 경기 {m['경기']} | <span style='color: #007ACC;'>{m['조']}조</span></h4>
