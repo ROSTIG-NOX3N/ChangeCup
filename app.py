@@ -188,23 +188,37 @@ if page == '메인 메뉴':
         st.markdown("<div class='group-box'><h4>G조 : <span class='pending'>미정</span></h4></div>", unsafe_allow_html=True)
 
 
-elif page=='경기 일정':
+elif page == '경기 일정':
     st.subheader('📅 경기 일정')
-    tabs=st.tabs(['✅ 완료된 경기','⏳ 예정된 경기'])
+    tabs = st.tabs(['✅ 완료된 경기', '⏳ 예정된 경기'])
+    
+    # 완료된 경기
     with tabs[0]:
-        for _,m in results_df.iterrows():
+        for _, m in results_df.iterrows():
             if str(m['1팀득점']).isdigit() and str(m['2팀득점']).isdigit():
-                st.markdown(f"**⚽ 경기 {m['경기']} | {m['조']}조**")
-                st.write(f"{m['1팀']} {m['1팀득점']} : {m['2팀득점']} {m['2팀']}")
-                st.write(f"📌 결과: {m['결과']}  |  📅 {m['경기일자']}")
-                st.markdown('---')
+                date_display = m['경기일자']
+                st.markdown(f"""
+                <div class="match-card">
+                  <h4>⚽ 경기 {m['경기']} | <span style='color: #007ACC;'>{m['조']}조</span></h4>
+                  <p><strong>{m['1팀']}</strong> {m['1팀득점']} : {m['2팀득점']} <strong>{m['2팀']}</strong></p>
+                  <p>📅 <strong>경기일자:</strong> {date_display}</p>
+                  <p>📌 <strong>결과:</strong> {m['결과']}</p>
+                </div>
+                """, unsafe_allow_html=True)
+    
+    # 예정된 경기
     with tabs[1]:
-        for _,m in results_df.iterrows():
-            if not(str(m['1팀득점']).isdigit() and str(m['2팀득점']).isdigit()):
-                st.markdown(f"**⚽ 경기 {m['경기']} | {m['조']}조**")
-                st.write(f"{m['1팀']} vs {m['2팀']}")
-                st.write(f"📅 예정일자: {m['경기일자']}")
-                st.markdown('---')
+        for _, m in results_df.iterrows():
+            if not (str(m['1팀득점']).isdigit() and str(m['2팀득점']).isdigit()):
+                date_display = m['경기일자']
+                st.markdown(f"""
+                <div class="match-card scheduled">
+                  <h4>⚽ 경기 {m['경기']} | <span style='color: #007ACC;'>{m['조']}조</span></h4>
+                  <p><strong>{m['1팀']}</strong> vs <strong>{m['2팀']}</strong></p>
+                  <p>📅 <strong>예정일자:</strong> {date_display}</p>
+                  <p>📌 <strong>결과:</strong> ⏳ 경기 예정</p>
+                </div>
+                """, unsafe_allow_html=True)
 
 elif page=='득점자':
     st.subheader('다득점자')
