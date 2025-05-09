@@ -115,7 +115,7 @@ if page == '메인 메뉴':
         st.info('📅 학사 일정')
         st.markdown("""
         <ul style='margin:0; padding-left:20px;'>
-          <li>5월 8일 목요일 : 3학년 학력평가</li>
+          <li>5월 12일 : 3학년 졸업앨범 사진 촬영(1 ~ 4교시)</li>
           <li>5월 13일 ~ 16일 : 2학년 수학여행</li>
           <li>5월 21일 : 체육대회</li>
         </ul>
