@@ -122,10 +122,14 @@ if page == '메인 메뉴':
         <ul style='margin:0; padding-left:20px;'>
           <li>11경기 영상 업로드 완료</li>
           <li>12경기 영상 업로드 예정( 예상 : 토요일 )</li>
-          <li>13경기 영상 업로드 예정( 예상 : 토요일 )</li>
         </ul>
         """, unsafe_allow_html=True)
-        
+        st.info('경기 일정 소식')
+        st.markdown("""
+        <ul style='margin:0; padding-left:20px;'>
+          <li>13경기 우천으로 인한 지연, 추후 일정은 일요일 업데이트 예정</li>
+        </ul>
+        """, unsafe_allow_html=True)
         
     with tabs[1]:  # 본선 진출 현황 탭
         st.subheader('본선 진출 현황')
