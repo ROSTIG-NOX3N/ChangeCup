@@ -326,14 +326,21 @@ elif page=='대진표':
         show_bracket('bracket.png')
     st.caption('※ 이미지가 크면 좌우로 스크롤하여 확인하세요.')
 
-elif page=="조별결과":
+elif page == "조별결과":
     st.markdown("### 🏆 조별 결과")
+
+    # 승점 및 골득실 계산
     class_stats_df["승점"] = class_stats_df["승"] * 3 + class_stats_df["무"]
     class_stats_df["골득실"] = class_stats_df["득점"] - class_stats_df["실점"]
 
-    def highlight_qualified(row):
-        return ['background-color: green'] * len(row) if row["학반"] == "2학년 2반","1학년 1반","3학년 4반" else [''] * len(row)
+    # 진출한 학반 리스트
+    qualified_teams = ["2학년 2반", "1학년 1반", "3학년 4반"]
 
+    # 스타일 함수
+    def highlight_qualified(row):
+        return ['background-color: green'] * len(row) if row["학반"] in qualified_teams else [''] * len(row)
+
+    # 조별 결과 출력
     for group, group_data in class_stats_df.groupby("조"):
         st.markdown(f"#### 조 {group}")
         sorted_group = group_data.sort_values(
@@ -344,3 +351,4 @@ elif page=="조별결과":
             sorted_group[["학반", "승", "무", "패", "득점", "실점", "승점", "골득실"]]
             .style.apply(highlight_qualified, axis=1)
         )
+
