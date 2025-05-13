@@ -120,7 +120,7 @@ if page == '메인 메뉴':
         </ul>
         """, unsafe_allow_html=True)
         
-        st.info('🎥 영상 업로드 일정 (5월 1주차)')
+        st.info('🎥 영상 업로드 일정 (5월 2주차)')
         st.markdown("""
         <ul style='margin:0; padding-left:20px;'>
           <li>11경기 이후 모든경기는 금주 일요일 업로드 예정</li>
@@ -200,12 +200,14 @@ if page == '메인 메뉴':
             </style>
         """, unsafe_allow_html=True)
 
-        st.markdown("<div class='group-box'><h4>A조 : <span class='pending'>미정</span></h4></div>", unsafe_allow_html=True)
+        st.markdown("<div class='group-box'><h4>A조 : <span class='pending'>1학년 1반</span></h4></div>", unsafe_allow_html=True)
+        st.markdown("영상 업로드 예정")
         st.markdown("<div class='group-box'><h4>B조 : <span class='pending'>미정</span></h4></div>", unsafe_allow_html=True)
         st.markdown("<div class='group-box'><h4>C조 : <span class='qualified'>2학년 2반</span></h4></div>", unsafe_allow_html=True)
         st.video('https://youtu.be/ZPLiaRIAfhg')
         st.markdown("<div class='group-box'><h4>D조 : <span class='pending'>미정</span></h4></div>", unsafe_allow_html=True)
-        st.markdown("<div class='group-box'><h4>E조 : <span class='pending'>미정</span></h4></div>", unsafe_allow_html=True)
+        st.markdown("<div class='group-box'><h4>E조 : <span class='pending'>3학년 4반</span></h4></div>", unsafe_allow_html=True)
+        st.markdown("영상 업로드 예정")
         st.markdown("<div class='group-box'><h4>F조 : <span class='pending'>미정</span></h4></div>", unsafe_allow_html=True)
         st.markdown("<div class='group-box'><h4>G조 : <span class='pending'>미정</span></h4></div>", unsafe_allow_html=True)
 
