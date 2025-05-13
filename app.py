@@ -268,13 +268,28 @@ if page == '득점자':
     st.subheader('다득점자')
     st.markdown("""
     <style>
-    .scorer-card {
-        padding: 12px;
-        margin: 8px 0;
-        background-color: #f9f9f9;
-        border-left: 6px solid #ffc107;
-        border-radius: 8px;
-        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    @media (prefers-color-scheme: light) {
+        .scorer-card {
+            padding: 12px;
+            margin: 8px 0;
+            background-color: #f9f9f9;
+            border-left: 6px solid #ffc107;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            color: #000;
+        }
+    }
+    
+    @media (prefers-color-scheme: dark) {
+        .scorer-card {
+            padding: 12px;
+            margin: 8px 0;
+            background-color: #2c2c2c;
+            border-left: 6px solid #ffeb3b;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(255,255,255,0.05);
+            color: #fff;
+        }
     }
     </style>
     """, unsafe_allow_html=True)
