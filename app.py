@@ -115,7 +115,6 @@ if page == '메인 메뉴':
         st.info('📅 학사 일정')
         st.markdown("""
         <ul style='margin:0; padding-left:20px;'>
-          <li>5월 12일 : 3학년 졸업앨범 사진 촬영(1 ~ 4교시)</li>
           <li>5월 13일 ~ 16일 : 2학년 수학여행</li>
           <li>5월 21일 : 체육대회</li>
         </ul>
@@ -124,15 +123,14 @@ if page == '메인 메뉴':
         st.info('🎥 영상 업로드 일정 (5월 1주차)')
         st.markdown("""
         <ul style='margin:0; padding-left:20px;'>
-          <li>11경기 영상 업로드 완료</li>
-          <li>12경기 영상 업로드 예정(예상: 토요일)</li>
+          <li>11경기 이후 모든경기는 금주 일요일 업로드 예정</li>
         </ul>
         """, unsafe_allow_html=True)
         
         st.warning('경기 일정 소식')
         st.markdown("""
         <ul style='margin:0; padding-left:20px;'>
-          <li>13경기 우천으로 인한 지연, 추후 일정은 일요일 업데이트 예정</li>
+          <li></li>
         </ul>
         """, unsafe_allow_html=True)
         
