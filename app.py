@@ -332,7 +332,7 @@ elif page=="조별결과":
     class_stats_df["골득실"] = class_stats_df["득점"] - class_stats_df["실점"]
 
     def highlight_qualified(row):
-        return ['background-color: green'] * len(row) if row["학반"] == "2학년 2반" else [''] * len(row)
+        return ['background-color: green'] * len(row) if row["학반"] == "2학년 2반","1학년 1반","3학년 4반" else [''] * len(row)
 
     for group, group_data in class_stats_df.groupby("조"):
         st.markdown(f"#### 조 {group}")
