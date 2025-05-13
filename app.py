@@ -264,14 +264,37 @@ elif page == '경기 일정':
                 """, unsafe_allow_html=True)
 
 
-elif page=='득점자':
+if page == '득점자':
     st.subheader('다득점자')
-    df=scorers_df.sort_values('득점',ascending=False)
-    mv=df['득점'].max()
-    for _,r in df.iterrows():
-        if r['득점']>=2:
-            medal='gold' if r['득점']==mv else 'silver' if r['득점']==mv-1 else 'bronze' if r['득점']==mv-2 else ''
-            st.markdown(scorer_card(r['이름'],r['소속'],r['득점'],medal),unsafe_allow_html=True)
+    st.markdown("""
+    <style>
+    .scorer-card {
+        padding: 12px;
+        margin: 8px 0;
+        background-color: #f9f9f9;
+        border-left: 6px solid #ffc107;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    </style>
+    """, unsafe_allow_html=True)
+
+    df = scorers_df.copy()
+    df = df[df['득점'] >= 2]  # 2점 이상만 필터링
+    df = df.sort_values('득점', ascending=False).reset_index(drop=True)
+
+    # 순위 계산
+    df['순위'] = df['득점'].rank(method='min', ascending=False).astype(int)
+
+    for _, r in df.iterrows():
+        medal = (
+            'gold' if r['순위'] == 1 else
+            'silver' if r['순위'] == 2 else
+            'bronze' if r['순위'] == 3 else
+            ''
+        )
+        st.markdown(scorer_card(r['이름'], r['소속'], r['득점'], medal), unsafe_allow_html=True)
+
 
 # 반별 통계
 elif page=='반별 통계':
