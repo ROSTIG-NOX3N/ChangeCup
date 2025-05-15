@@ -312,17 +312,18 @@ if page == '득점자':
 
 
 # 반별 통계
-elif page=='반별 통계':
+elif page == '반별 통계':
     st.markdown('### 📋 반별 경기 통계')
-    grade=st.selectbox('학년',[1,2,3])
-    ban=st.selectbox('반',[1,2,3,4,5,6,7])
-    sel=f"{grade}학년 {ban}반"
-    data=class_stats_df[class_stats_df['학반']==sel].reset_index(drop=True)
+    grade = st.selectbox('학년', [1, 2, 3])
+    ban = st.selectbox('반', [1, 2, 3, 4, 5, 6, 7])
+    sel = f"{grade}학년 {ban}반"
+    data = class_stats_df[class_stats_df['학반'] == sel].reset_index(drop=True)
+
     if not data.empty:
         st.dataframe(data.drop(columns=['sort_order']))
-        w,d,l=data['승'].sum(),data['무'].sum(),data['패'].sum()
-        gf,ga=data['득점'].sum(),data['실점'].sum()
-        gd,pts=gf-ga,w*3+d
+        w, d, l = data['승'].sum(), data['무'].sum(), data['패'].sum()
+        gf, ga = data['득점'].sum(), data['실점'].sum()
+        gd, pts = gf - ga, w * 3 + d
         st.success(f"✅ 승리: {w}승")
         st.warning(f"🤝 무승부: {d}무")
         st.error(f"❌ 패배: {l}패")
@@ -330,12 +331,21 @@ elif page=='반별 통계':
         st.error(f"🛡️ 실점: {ga}실점")
         st.info(f"🧮 골득실: {gd}점")
         st.info(f"🏅 승점: {pts}점")
-        sub=scorers_df[scorers_df['소속']==sel]
+
+        # 해당 반 득점자
+        sub = scorers_df[scorers_df['소속'] == sel]
         if not sub.empty:
-            mv2=sub['득점'].max()
-            for _,r in sub.sort_values('득점',ascending=False).iterrows():
-                medal='gold' if r['득점']==mv2 else 'silver' if r['득점']==mv2-1 else 'bronze' if r['득점']==mv2-2 else ''
-                st.markdown(scorer_card(r['이름'],r['소속'],r['득점'],medal),unsafe_allow_html=True)
+            sub = sub.sort_values('득점', ascending=False).reset_index(drop=True)
+            sub['순위'] = sub['득점'].rank(method='min', ascending=False).astype(int)
+
+            for _, r in sub.iterrows():
+                medal = (
+                    'gold' if r['순위'] == 1 else
+                    'silver' if r['순위'] == 2 else
+                    'bronze' if r['순위'] == 3 else
+                    ''
+                )
+                st.markdown(scorer_card(r['이름'], r['소속'], r['득점'], medal), unsafe_allow_html=True)
         else:
             st.warning('⚠️ 해당 반의 득점자 정보가 없습니다.')
 
