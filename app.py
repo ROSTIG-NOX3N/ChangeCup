@@ -123,7 +123,7 @@ if page == '메인 메뉴':
         st.info('🎥 영상 업로드 일정 (5월 2주차)')
         st.markdown("""
         <ul style='margin:0; padding-left:20px;'>
-          <li>11경기 이후 모든경기는 금주 일요일 업로드 예정</li>
+          <li>모든 경기 영상 업로드 완료</li>
         </ul>
         """, unsafe_allow_html=True)
         
