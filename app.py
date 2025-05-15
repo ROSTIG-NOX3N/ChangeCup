@@ -104,7 +104,7 @@ if page == '메인 메뉴':
           <ul style='margin:0; padding-left:20px;'>
             <li>매 경기 후 자동으로 데이터 반영 예정</li>
             <li>개선사항은 학생회 단톡으로 공지 예정</li>
-            <li>경기 일정은 매주 일요일 업데이트 예정</li>
+            <li>경기 일정 변동시 변동 일자와 사유 안내 예정</li>
           </ul>
         </div>
         """, unsafe_allow_html=True)
