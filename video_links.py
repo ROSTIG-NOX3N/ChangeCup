@@ -6,5 +6,8 @@ video_links = {
     8: "https://youtu.be/Ro1kdGvz2og?feature=shared",
     9: "https://youtu.be/g41PdcwLp2w?feature=shared",
     10: "https://youtu.be/HoKOm4U6ue0?feature=shared",
-    11: "https://youtu.be/9xndRznsVZQ"
+    11: "https://youtu.be/9xndRznsVZQ",
+    12: "https://youtu.be/7NQ_EFe1ojg",
+    14: "https://youtu.be/Obcx_8KpJgE",
+    15: "https://youtu.be/uFn53yVtXQE"
 }
