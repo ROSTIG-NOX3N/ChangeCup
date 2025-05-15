@@ -130,7 +130,6 @@ if page == '메인 메뉴':
         st.warning('경기 일정 소식')
         st.markdown("""
         <ul style='margin:0; padding-left:20px;'>
-          <li></li>
         </ul>
         """, unsafe_allow_html=True)
         
