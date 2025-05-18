@@ -381,7 +381,7 @@ elif page == "조별결과":
     class_stats_df["골득실"] = class_stats_df["득점"] - class_stats_df["실점"]
 
     # 진출한 학반 리스트
-    qualified_teams = ["2학년 2반", "1학년 1반", "3학년 4반","3학년 6반]
+    qualified_teams = ["2학년 2반", "1학년 1반", "3학년 4반", "3학년 6반"]
 
     # 스타일 함수
     def highlight_qualified(row):
