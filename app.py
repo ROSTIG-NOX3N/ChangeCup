@@ -204,7 +204,7 @@ if page == '메인 메뉴':
         st.markdown("<div class='group-box'><h4>B조 : <span class='pending'>미정</span></h4></div>", unsafe_allow_html=True)
         st.markdown("<div class='group-box'><h4>C조 : <span class='qualified'>2학년 2반</span></h4></div>", unsafe_allow_html=True)
         st.video('https://youtu.be/ZPLiaRIAfhg')
-        st.markdown("<div class='group-box'><h4>D조 : <span class='pending'>미정</span></h4></div>", unsafe_allow_html=True)
+        st.markdown("<div class='group-box'><h4>D조 : <span class='qualified'>3학년 6반</span></h4></div>", unsafe_allow_html=True)
         st.markdown("<div class='group-box'><h4>E조 : <span class='qualified'>3학년 4반</span></h4></div>", unsafe_allow_html=True)
         st.info("E조 진출팀 영상 업로드 예정")
         st.markdown("<div class='group-box'><h4>F조 : <span class='pending'>미정</span></h4></div>", unsafe_allow_html=True)
@@ -381,7 +381,7 @@ elif page == "조별결과":
     class_stats_df["골득실"] = class_stats_df["득점"] - class_stats_df["실점"]
 
     # 진출한 학반 리스트
-    qualified_teams = ["2학년 2반", "1학년 1반", "3학년 4반"]
+    qualified_teams = ["2학년 2반", "1학년 1반", "3학년 4반","3학년 6반]
 
     # 스타일 함수
     def highlight_qualified(row):
