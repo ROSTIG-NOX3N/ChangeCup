@@ -115,15 +115,14 @@ if page == '메인 메뉴':
         st.info('📅 학사 일정')
         st.markdown("""
         <ul style='margin:0; padding-left:20px;'>
-          <li>5월 13일 ~ 16일 : 2학년 수학여행</li>
           <li>5월 21일 : 체육대회</li>
         </ul>
         """, unsafe_allow_html=True)
         
-        st.info('🎥 영상 업로드 일정 (5월 2주차)')
+        st.info('🎥 영상 업로드 일정 (5월 3주차)')
         st.markdown("""
         <ul style='margin:0; padding-left:20px;'>
-          <li>모든 경기 영상 업로드 완료</li>
+          <li>16경기 업로드 예정</li>
         </ul>
         """, unsafe_allow_html=True)
         
@@ -205,6 +204,7 @@ if page == '메인 메뉴':
         st.markdown("<div class='group-box'><h4>C조 : <span class='qualified'>2학년 2반</span></h4></div>", unsafe_allow_html=True)
         st.video('https://youtu.be/ZPLiaRIAfhg')
         st.markdown("<div class='group-box'><h4>D조 : <span class='qualified'>3학년 6반</span></h4></div>", unsafe_allow_html=True)
+        st.info("D조 진출팀 영상 업로드 예정")
         st.markdown("<div class='group-box'><h4>E조 : <span class='qualified'>3학년 4반</span></h4></div>", unsafe_allow_html=True)
         st.info("E조 진출팀 영상 업로드 예정")
         st.markdown("<div class='group-box'><h4>F조 : <span class='pending'>미정</span></h4></div>", unsafe_allow_html=True)
